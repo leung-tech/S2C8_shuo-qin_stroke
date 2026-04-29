@@ -47,8 +47,8 @@
         /* 拆字顯示區 */
         .component-block { background-color: #e0e7ff; color: #312e81; font-family: 'KaiTi', serif; font-weight: bold; border-radius: 8px; padding: 0.5rem 1.2rem; box-shadow: 0 3px 5px rgba(0,0,0,0.05), inset 0 -2px 0 rgba(67, 56, 202, 0.1); }
 
-        /* 重組句子區塊樣式 */
-        .word-block { cursor: pointer; user-select: none; transition: all 0.2s; touch-action: manipulation; }
+        /* 重組句子區塊樣式 (Drag & Drop) */
+        .word-block { cursor: grab; user-select: none; transition: all 0.2s; touch-action: manipulation; }
         @media (hover: hover) { .word-block:hover { transform: translateY(-2px); } }
         .word-block:active { cursor: grabbing; transform: scale(0.95); }
         .slot-box.drag-over { background-color: #e0e7ff; border-color: #6366f1; }
@@ -442,7 +442,7 @@
         };
 
         // ==========================================
-        // 16組 完整字庫
+        // 16組 完整字庫 (移除重組句子的標點符號)
         // ==========================================
         window.wordDatabase = [
             {
@@ -466,7 +466,7 @@
                     synonym: { options: ["卓越成就", "一事無成", "粗製濫造"], correct: "卓越成就" },
                     context: { options: [{text: "發表了世界頂級的科學論文", emoji: "📄🏆"}, {text: "每天在家裡睡覺打電動", emoji: "🛌🎮"}, {text: "剛學會騎腳踏車而已", emoji: "🚲😅"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["他", "在", "醫學", "領域", "，", "有著", "精深造詣", "。"],
+                sentenceUnscramble: ["他", "在", "醫學", "領域", "有著", "精深造詣"],
                 fillInGame: { sentence: "李教授在科學研究上取得了____，受人敬仰。", options: ["精深造詣", "遲鈍", "體會"], correct: "精深造詣" }
             },
             {
@@ -488,7 +488,7 @@
                     synonym: { options: ["爬上", "跌倒", "下降"], correct: "爬上" },
                     context: { options: [{text: "帶著裝備爬上陡峭的高山", emoji: "🧗‍♂️⛰️"}, {text: "坐電梯下樓去便利商店買東西", emoji: "🛗🏪"}, {text: "在平坦的操場上輕鬆散步", emoji: "🚶‍♂️🏞️"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["我們", "決定", "明天", "一早", "，", "去攀登", "高山", "。"],
+                sentenceUnscramble: ["我們", "決定", "明天", "一早", "去攀登", "高山"],
                 fillInGame: { sentence: "為了看日出，我們決定____這座陡峭的高山。", options: ["攀登", "珍惜", "奠定"], correct: "攀登" }
             },
             {
@@ -510,7 +510,7 @@
                     synonym: { options: ["愛護", "破壞", "浪費"], correct: "愛護" },
                     context: { options: [{text: "把舊玩具擦乾淨收好", emoji: "🧸✨"}, {text: "把還能用的鉛筆故意折斷", emoji: "✏️💥"}, {text: "任由水龍頭一直流水不關", emoji: "🚰💧"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["我們", "應該", "好好", "珍惜", "，", "現在的", "幸福生活", "。"],
+                sentenceUnscramble: ["我們", "應該", "好好", "珍惜", "現在的", "幸福生活"],
                 fillInGame: { sentence: "水資源很寶貴，我們一定要好好____。", options: ["蒐集", "開拓", "珍惜"], correct: "珍惜" }
             },
             {
@@ -534,7 +534,7 @@
                     synonym: { options: ["日積月累", "一朝一夕", "轉眼之間"], correct: "日積月累" },
                     context: { options: [{text: "每天練琴練了十年", emoji: "🎹📅"}, {text: "昨天才剛開始學腳踏車", emoji: "🚲😅"}, {text: "等了三分鐘泡麵煮好", emoji: "🍜⏱️"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["經過", "長年累月", "的努力", "，", "他終於", "成功了", "。"],
+                sentenceUnscramble: ["經過", "長年累月", "的努力", "他終於", "成功了"],
                 fillInGame: { sentence: "鐘乳石是經過____的滴水才形成的自然奇觀。", options: ["遲鈍", "長年累月", "書籍"], correct: "長年累月" }
             },
             {
@@ -556,7 +556,7 @@
                     synonym: { options: ["實行", "空想", "放棄"], correct: "實行" },
                     context: { options: [{text: "把環保方法用在生活裡", emoji: "♻️👍"}, {text: "只是嘴巴說說卻不去做", emoji: "🗣️🙅"}, {text: "把計畫表揉掉丟進垃圾桶", emoji: "🗑️📃"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["我們要", "把", "學到的", "知識", "，", "實踐", "出來", "。"],
+                sentenceUnscramble: ["我們要", "把", "學到的", "知識", "實踐", "出來"],
                 fillInGame: { sentence: "光說不練是沒有用的，我們必須親自去____。", options: ["實踐", "建樹", "關鍵"], correct: "實踐" }
             },
             {
@@ -580,7 +580,7 @@
                     synonym: { options: ["永不放棄", "半途而廢", "見異思遷"], correct: "永不放棄" },
                     context: { options: [{text: "跑到腳痠還是繼續跑完", emoji: "🏃‍♂️💦"}, {text: "遇到一點困難就回家睡覺", emoji: "🛌💤"}, {text: "做到一半覺得無聊就不做了", emoji: "🤷‍♂️🎮"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["只要", "堅持不懈", "，", "我們", "一定能", "達成目標", "。"],
+                sentenceUnscramble: ["只要", "堅持不懈", "我們", "一定能", "達成目標"],
                 fillInGame: { sentence: "遇到困難時，只要____，最後一定會成功。", options: ["堅持不懈", "艱苦奮鬥", "與日俱增"], correct: "堅持不懈" }
             },
             {
@@ -602,7 +602,7 @@
                     synonym: { options: ["貢獻成就", "毫無作為", "破壞環境"], correct: "貢獻成就" },
                     context: { options: [{text: "發明新藥救了很多人", emoji: "💊🦸‍♂️"}, {text: "每天在家裡無所事事", emoji: "🛋️🥱"}, {text: "在公園裡種了一棵蘋果樹", emoji: "🌳🍎"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["他", "在", "醫學界", "，", "有著", "很高的", "建樹", "。"],
+                sentenceUnscramble: ["他", "在", "醫學界", "有著", "很高的", "建樹"],
                 fillInGame: { sentence: "這位老校長在教育界有著卓越的____。", options: ["書籍", "建樹", "遲鈍"], correct: "建樹" }
             },
             {
@@ -626,7 +626,7 @@
                     synonym: { options: ["越來越多", "越來越少", "保持不變"], correct: "越來越多" },
                     context: { options: [{text: "小狗一天吃得比一天多", emoji: "🐶📈"}, {text: "水壺裡的水一天比一天少", emoji: "💧📉"}, {text: "我的身高一直沒有改變", emoji: "🧍‍♂️📏"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["大家", "對", "環保的", "重視", "，", "與日俱增", "。"],
+                sentenceUnscramble: ["大家", "對", "環保的", "重視", "與日俱增"],
                 fillInGame: { sentence: "隨著比賽日期接近，選手們的壓力____。", options: ["與日俱增", "長年累月", "堅持不懈"], correct: "與日俱增" }
             },
             {
@@ -650,7 +650,7 @@
                     synonym: { options: ["努力拼搏", "貪生怕死", "坐享其成"], correct: "努力拼搏" },
                     context: { options: [{text: "在惡劣環境下努力工作", emoji: "🌧️💪"}, {text: "每天躺在沙發上看電視", emoji: "🛋️📺"}, {text: "中了大獎一夜致富", emoji: "💰🎉"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["為了", "美好的未來", "，", "我們必須", "艱苦奮鬥", "。"],
+                sentenceUnscramble: ["為了", "美好的未來", "我們必須", "艱苦奮鬥"],
                 fillInGame: { sentence: "前人經過____，才為我們創造了現在的繁榮。", options: ["艱苦奮鬥", "實踐", "珍惜"], correct: "艱苦奮鬥" }
             },
             {
@@ -672,7 +672,7 @@
                     synonym: { options: ["緩慢", "敏捷", "快速"], correct: "緩慢" },
                     context: { options: [{text: "叫他好幾聲過很久才回頭", emoji: "🐢❓"}, {text: "聽到音樂馬上跟著跳舞", emoji: "🐇💃"}, {text: "球飛過來瞬間接住", emoji: "⚾🙌"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["他", "剛睡醒", "，", "反應", "顯得", "有些", "遲鈍", "。"],
+                sentenceUnscramble: ["他", "剛睡醒", "反應", "顯得", "有些", "遲鈍"],
                 fillInGame: { sentence: "這把剪刀太____了，根本剪不斷紙張。", options: ["精深造詣", "遲鈍", "關鍵"], correct: "遲鈍" }
             },
             {
@@ -694,7 +694,7 @@
                     synonym: { options: ["書本", "電視", "食物"], correct: "書本" },
                     context: { options: [{text: "圖書館裡一排又一排的故事", emoji: "📚🏫"}, {text: "電視裡正在播的卡通", emoji: "📺👀"}, {text: "手機裡的網路遊戲", emoji: "📱🎮"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["圖書館", "，", "收藏了", "各種各樣的", "珍貴", "書籍", "。"],
+                sentenceUnscramble: ["圖書館", "收藏了", "各種各樣的", "珍貴", "書籍"],
                 fillInGame: { sentence: "閱讀優良的____，可以豐富我們的知識。", options: ["書籍", "體會", "攀登"], correct: "書籍" }
             },
             {
@@ -716,7 +716,7 @@
                     synonym: { options: ["重點核心", "無關緊要", "隨便敷衍"], correct: "重點核心" },
                     context: { options: [{text: "解開超級難題的最重要線索", emoji: "🔍💡"}, {text: "掉在路邊沒用的小石頭", emoji: "🪨🚶‍♂️"}, {text: "考卷上寫錯的名字", emoji: "📝❌"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["溝通", "，", "是", "解決衝突", "的", "關鍵", "。"],
+                sentenceUnscramble: ["溝通", "是", "解決衝突", "的", "關鍵"],
                 fillInGame: { sentence: "努力學習是獲得好成績的____。", options: ["建樹", "奠定", "關鍵"], correct: "關鍵" }
             },
             {
@@ -738,7 +738,7 @@
                     synonym: { options: ["收集", "丟棄", "破壞"], correct: "收集" },
                     context: { options: [{text: "到處尋找特別的郵票貼起來", emoji: "🗂️✨"}, {text: "把不要的垃圾全部丟掉", emoji: "🗑️👋"}, {text: "把衣服隨便塞進衣櫃", emoji: "👕🌪️"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["老師", "請我們", "上網", "，", "蒐集", "環保", "資料", "。"],
+                sentenceUnscramble: ["老師", "請我們", "上網", "蒐集", "環保", "資料"],
                 fillInGame: { sentence: "警察正在現場____有用的線索。", options: ["實踐", "蒐集", "開拓"], correct: "蒐集" }
             },
             {
@@ -760,7 +760,7 @@
                     synonym: { options: ["開闢", "封閉", "毀滅"], correct: "開闢" },
                     context: { options: [{text: "在荒野中砍掉雜草走出一條新路", emoji: "🛤️⛏️"}, {text: "躲在房間裡不肯出門", emoji: "🚪🙅‍♂️"}, {text: "把已經蓋好的房子拆掉", emoji: "🏚️🔨"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["這家", "公司", "正努力", "開拓", "，", "海外", "市場", "。"],
+                sentenceUnscramble: ["這家", "公司", "正努力", "開拓", "海外", "市場"],
                 fillInGame: { sentence: "閱讀可以幫助我們____視野，了解世界。", options: ["開拓", "珍惜", "體會"], correct: "開拓" }
             },
             {
@@ -782,7 +782,7 @@
                     synonym: { options: ["建立基礎", "破壞摧毀", "搖擺不定"], correct: "建立基礎" },
                     context: { options: [{text: "蓋房子前先打好堅固的地基", emoji: "🧱🏗️"}, {text: "用沙子隨便堆一個會倒的城堡", emoji: "🏖️💨"}, {text: "把已經寫好的功課擦掉", emoji: "✏️🧹"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["良好的", "教育", "，", "為他", "奠定了", "成功", "基礎", "。"],
+                sentenceUnscramble: ["良好的", "教育", "為他", "奠定了", "成功", "基礎"],
                 fillInGame: { sentence: "小學階段的學習，為未來的發展____了基礎。", options: ["攀登", "蒐集", "奠定"], correct: "奠定" }
             },
             {
@@ -804,7 +804,7 @@
                     synonym: { options: ["感受領悟", "麻木不仁", "視而不見"], correct: "感受領悟" },
                     context: { options: [{text: "自己洗衣服後才懂媽媽有多累", emoji: "👕💦"}, {text: "只是看著別人做事什麼都不想", emoji: "👀😶"}, {text: "隨便敷衍了事不想努力", emoji: "🤷‍♂️💤"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["只有", "親身經歷", "，", "才能", "深刻", "體會", "父母的", "辛苦", "。"],
+                sentenceUnscramble: ["只有", "親身經歷", "才能", "深刻", "體會", "父母的", "辛苦"],
                 fillInGame: { sentence: "讀了這篇文章，我深深____到了友情的珍貴。", options: ["遲鈍", "體會", "書籍"], correct: "體會" }
             }
         ];
@@ -1187,11 +1187,9 @@
             // 繪製空槽或已放置的詞語 (Drop Zones)
             for (let i = 0; i < targetWords.length; i++) {
                 const slotBox = document.createElement('div');
-                // 判斷如果是標點符號，寬度可以窄一點
-                const isPunctuation = targetWords[i] === '，' || targetWords[i] === '。';
-                const minWidth = isPunctuation ? 'min-w-[30px]' : 'min-w-[40px] md:min-w-[60px]';
                 
-                slotBox.className = `${minWidth} h-12 md:h-14 rounded-lg border-2 border-dashed border-slate-300 flex items-center justify-center bg-slate-50 relative transition-all px-2 slot-box`;
+                // 移除標點判斷，統一寬度
+                slotBox.className = `min-w-[40px] md:min-w-[60px] h-12 md:h-14 rounded-lg border-2 border-dashed border-slate-300 flex items-center justify-center bg-slate-50 relative transition-all px-2 slot-box`;
                 // 綁定 Drop 事件
                 slotBox.ondragover = window.allowDrop;
                 slotBox.ondrop = (e) => window.handleDrop(e, i);
