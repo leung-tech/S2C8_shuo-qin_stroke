@@ -37,7 +37,7 @@
         /* 雙胞胎字按鈕 */
         .twin-btn { transition: all 0.2s; aspect-ratio: 1/1; }
         .twin-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.1); }
-        .twin-btn.correct { border-color: #22c55e !important; color: #166534; pointer-events: none; }
+        .twin-btn.correct { border-color: #22c55e !important; color: #166534; pointer-events: none; background-color: #dcfce7 !important; }
         .twin-btn.wrong { border-color: #f43f5e !important; color: #9f1239; opacity: 0.5;}
 
         /* 部首選項按鈕 */
@@ -53,7 +53,7 @@
         .word-block:active { cursor: grabbing; transform: scale(0.95); }
         .slot-box.drag-over { background-color: #e0e7ff; border-color: #6366f1; }
         
-        .tts-btn { transition: transform 0.2s, background-color 0.2s; }
+        .tts-btn { transition: transform 0.2s, background-color 0.2s; cursor: pointer; }
         .tts-btn:active { transform: scale(0.9); }
     </style>
 </head>
@@ -66,7 +66,7 @@
             <h1 class="text-base lg:text-2xl font-bold tracking-wider flex items-center gap-2">
                 <span>🚀 語文探索基地</span>
                 <span class="hidden lg:inline text-indigo-300">|</span>
-                <span class="text-sm lg:text-xl text-indigo-100">中二單元八 說勤</span>
+                <span class="text-sm lg:text-xl text-indigo-100">中二單元八 說勤 字詞</span>
             </h1>
             <div class="flex gap-4 items-center">
                 <button onclick="window.openSubmitModal()" class="hidden md:flex bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1.5 rounded-lg font-bold shadow-sm transition-colors items-center gap-2 text-sm lg:text-base">
@@ -97,7 +97,7 @@
         <div class="w-full max-w-6xl flex justify-between items-center mb-6 mx-auto">
             <div class="bg-amber-100 border-2 border-amber-300 rounded-xl px-4 py-2 shadow-sm flex items-center gap-2 md:gap-3">
                 <span class="text-xl md:text-2xl">⭐</span>
-                <span class="font-bold text-amber-800 text-base md:text-lg whitespace-nowrap">學習點數：<span id="score-display" class="text-xl md:text-2xl ml-1 font-black text-amber-600">0</span> <span class="text-amber-700/70 text-sm md:text-base">/ <span id="max-score-display">0</span></span></span>
+                <span class="font-bold text-amber-800 text-base md:text-lg whitespace-nowrap">總學習點數：<span id="score-display" class="text-xl md:text-2xl ml-1 font-black text-amber-600">0</span> <span class="text-amber-700/70 text-sm md:text-base">/ <span id="max-score-display">0</span></span></span>
             </div>
             
             <div class="flex gap-4 items-center">
@@ -119,7 +119,7 @@
                 <div class="bg-slate-50 px-6 md:px-8 py-6 rounded-2xl mb-6 w-full border border-slate-200 flex items-center justify-center" id="intro-context"></div>
                 <div id="intro-question" class="text-lg md:text-xl font-bold text-indigo-800 mb-8 w-full max-w-2xl mx-auto bg-indigo-50 px-6 py-4 rounded-xl border border-indigo-100"></div>
                 <button onclick="window.revealWord()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-lg md:text-xl font-bold py-4 px-8 md:px-12 rounded-xl shadow-lg transition-transform active:scale-95 flex items-center gap-3">
-                    🔍 揭曉答案並進入分析
+                    🔍 揭曉答案並進入學習
                 </button>
             </div>
         </div>
@@ -129,8 +129,12 @@
             
             <!-- 【字】 文字 -->
             <div class="w-full flex flex-col items-center relative mt-6">
-                <div class="absolute -top-5 flex justify-center w-full z-10">
+                <!-- 標題與主要詞語朗讀按鈕 -->
+                <div class="absolute -top-5 flex justify-center items-center w-full z-10 gap-3">
                     <span class="badge-element badge-yin text-base shadow-sm">🔡 【字】結構觀察</span>
+                    <button onclick="window.speakText(window.currentWordData.word, event)" class="tts-btn flex items-center justify-center bg-white border-2 border-indigo-200 text-indigo-700 px-3 py-1 rounded-full font-bold shadow-sm text-sm hover:bg-indigo-50 gap-1">
+                        🗣️ 讀出詞語
+                    </button>
                 </div>
                 <div id="word-display" class="flex justify-center flex-wrap gap-4 md:gap-8 bg-white p-6 md:p-8 rounded-3xl border-2 border-slate-200 shadow-sm pt-12 w-full">
                     <!-- JS 生成 -->
@@ -154,7 +158,9 @@
                     </div>
                     <div class="mt-6 flex flex-col sm:flex-row gap-3 w-full max-w-[280px] sm:max-w-full">
                         <button onclick="window.playAnimation()" class="flex-1 py-3 bg-slate-700 hover:bg-slate-800 text-white rounded-lg font-bold text-base md:text-lg transition-colors">▶️ 觀察筆順</button>
-                        <button onclick="window.startQuiz()" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-base md:text-lg transition-colors flex justify-center items-center gap-2">✍️ 測驗 <span class="bg-amber-300 text-amber-900 px-2 py-0.5 rounded text-sm shadow-sm whitespace-nowrap">⭐ +2</span></button>
+                        <button id="quiz-btn" onclick="window.startQuiz()" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-base md:text-lg transition-colors flex justify-center items-center gap-2">
+                            ✍️ 測驗 <span class="bg-amber-300 text-amber-900 px-2 py-0.5 rounded text-sm shadow-sm whitespace-nowrap">⭐ +2</span>
+                        </button>
                     </div>
                 </div>
 
@@ -174,9 +180,7 @@
                         <!-- 拆字顯示區 -->
                         <div class="w-full transition-all duration-300 opacity-0 hidden" id="components-section">
                             <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-200 shadow-sm">
-                                <div id="info-components" class="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100 flex-wrap">
-                                    <!-- 這裡會插入組件 -->
-                                </div>
+                                <div id="info-components" class="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100 flex-wrap"></div>
                                 <div id="char-hint-box" class="text-slate-600 font-medium text-sm md:text-base flex gap-2">
                                     <span>💡</span><span id="char-hint-text"></span>
                                 </div>
@@ -192,13 +196,9 @@
                         </div>
                         <p class="text-center font-bold text-rose-800/80 text-base md:text-lg mb-2">哪一個才是正確的字？</p>
                         
-                        <div class="flex justify-center gap-6 md:gap-8" id="twin-buttons-container">
-                            <!-- JS 生成互動按鈕 -->
-                        </div>
+                        <div class="flex justify-center gap-6 md:gap-8" id="twin-buttons-container"></div>
                         
-                        <div id="twin-explanation" class="hidden mt-4 bg-white rounded-2xl border border-rose-200 p-4 text-rose-900 font-bold text-sm md:text-base flex items-start md:items-center gap-3 shadow-sm mx-auto w-full max-w-md">
-                            <!-- 答對後顯示解釋 -->
-                        </div>
+                        <div id="twin-explanation" class="hidden mt-4 bg-white rounded-2xl border border-rose-200 p-4 text-rose-900 font-bold text-sm md:text-base flex items-start md:items-center gap-3 shadow-sm mx-auto w-full max-w-md"></div>
                     </div>
                 </div>
             </div>
@@ -216,33 +216,42 @@
                     <div class="flex-1 flex flex-col gap-4">
                         <div class="flex items-center gap-2 border-b-2 border-teal-100 pb-2 flex-wrap">
                             <h2 class="text-xl md:text-2xl font-bold text-teal-900">📚 詞語小辭典</h2>
+                            <button onclick="window.speakText(window.currentWordData.wordExplanation, event)" class="tts-btn w-8 h-8 rounded-full bg-teal-100 text-teal-700 shadow-sm flex items-center justify-center text-sm">🗣️</button>
                             <span id="word-english" class="bg-slate-100 text-slate-600 px-2 py-1 rounded-md text-xs md:text-sm font-bold ml-2 font-mono tracking-wider shadow-sm"></span>
                         </div>
                         <div id="word-explanation" class="text-lg md:text-xl text-slate-700 leading-relaxed font-medium mt-2"></div>
                         
                         <!-- ⚡ 思考挑戰 -->
-                        <div class="mt-auto bg-amber-50 border border-amber-200 p-4 rounded-xl flex flex-col gap-2 shadow-inner">
-                            <span class="text-amber-700 font-bold flex items-center gap-2"><span>⚡</span> 腦力激盪 (進階思考)</span>
+                        <div class="mt-auto bg-amber-50 border border-amber-200 p-4 rounded-xl flex flex-col gap-3 shadow-inner">
+                            <div class="flex items-center justify-between">
+                                <span class="text-amber-700 font-bold flex items-center gap-2"><span>⚡</span> 腦力激盪 (進階思考)</span>
+                                <button onclick="window.speakText(window.currentWordData.thinkChallenge, event)" class="tts-btn w-8 h-8 rounded-full bg-amber-200 text-amber-800 shadow-sm flex items-center justify-center text-sm">🗣️</button>
+                            </div>
                             <span id="think-challenge" class="text-amber-900 font-medium text-base md:text-lg"></span>
                         </div>
                     </div>
 
                     <!-- 詞語學習秘笈 -->
                     <div class="flex-1 bg-slate-50 border border-slate-200 rounded-2xl p-5 md:p-6 flex flex-col gap-5">
-                        <div class="flex items-center justify-between">
+                        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
                             <h2 class="text-lg md:text-xl font-black text-slate-800 flex items-center gap-2"><span>🔮</span> 詞語學習秘笈</h2>
-                            <button onclick="window.playSecretGuideTTS(event)" class="tts-btn w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center">🗣️</button>
                         </div>
 
                         <!-- 秘笈 1: 積木拼 -->
                         <div>
-                            <h3 class="text-sm md:text-base font-bold text-indigo-700 mb-2 flex items-center gap-2"><span>🧩</span> 把字當積木拼</h3>
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-sm md:text-base font-bold text-indigo-700 flex items-center gap-2"><span>🧩</span> 把字當積木拼</h3>
+                                <button onclick="window.playBlockTTS(event)" class="tts-btn w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shadow-sm">🗣️</button>
+                            </div>
                             <div class="bg-white p-3 rounded-lg border border-slate-200 flex items-center gap-2 text-lg md:text-xl font-bold flex-wrap" id="block-combine-display"></div>
                         </div>
 
                         <!-- 秘笈 2: 百搭公式 -->
                         <div>
-                            <h3 class="text-sm md:text-base font-bold text-emerald-700 mb-2 flex items-center gap-2"><span>🧮</span> 百搭公式 (不會用錯)</h3>
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-sm md:text-base font-bold text-emerald-700 flex items-center gap-2"><span>🧮</span> 百搭公式 (不會用錯)</h3>
+                                <button onclick="window.playFormulaTTS(event)" class="tts-btn w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-sm">🗣️</button>
+                            </div>
                             <div class="bg-emerald-50 p-3 rounded-lg border border-emerald-100 flex flex-col gap-2">
                                 <div class="text-base md:text-lg font-bold text-emerald-900 tracking-wide" id="formula-pattern"></div>
                                 <div class="text-xs md:text-sm text-emerald-800 bg-white py-1 px-2 rounded font-medium" id="formula-example"></div>
@@ -251,7 +260,10 @@
 
                         <!-- 秘笈 3: 地雷區 -->
                         <div>
-                            <h3 class="text-sm md:text-base font-bold text-rose-700 mb-2 flex items-center gap-2"><span>💥</span> 地雷區 (防錯)</h3>
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-sm md:text-base font-bold text-rose-700 flex items-center gap-2"><span>💥</span> 地雷區 (防錯)</h3>
+                                <button onclick="window.playMinefieldTTS(event)" class="tts-btn w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shadow-sm">🗣️</button>
+                            </div>
                             <div class="bg-white p-3 md:p-4 rounded-lg border border-rose-100 flex flex-col gap-2">
                                 <div class="flex items-center gap-2 text-base md:text-lg font-bold text-slate-400">
                                     <span class="text-rose-500">❌</span><span id="minefield-wrong" class="strikethrough-red"></span>
@@ -323,18 +335,15 @@
                         </div>
                         
                         <!-- 放字用的方格區 -->
-                        <div id="drop-zone" class="min-h-[80px] bg-white flex flex-wrap gap-2 mb-4 items-center justify-center py-2">
-                            <!-- JS 生成的方格 -->
-                        </div>
-
+                        <div id="drop-zone" class="min-h-[80px] bg-white flex flex-wrap gap-2 mb-4 items-center justify-center py-2"></div>
                         <div class="text-center text-slate-400 text-xs font-bold mb-2">💡 電腦可拖拉，手機/平板請直接「點擊」下方詞語放入空格</div>
-
+                        
                         <!-- 下方的詞語庫 -->
                         <div id="word-pool" class="flex flex-wrap gap-2 justify-center mb-5 min-h-[50px]"></div>
                         
                         <div class="mt-auto flex justify-center gap-3">
-                            <button onclick="window.resetUnscramble()" class="px-4 py-2 bg-slate-200 text-slate-700 hover:bg-slate-300 rounded-lg font-bold text-sm transition-colors">重新排列</button>
-                            <button onclick="window.checkUnscramble()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-sm md:text-base shadow-sm transition-colors">提交答案</button>
+                            <button id="unscramble-reset-btn" onclick="window.resetUnscramble()" class="px-4 py-2 bg-slate-200 text-slate-700 hover:bg-slate-300 rounded-lg font-bold text-sm transition-colors">重新排列</button>
+                            <button id="unscramble-submit-btn" onclick="window.checkUnscramble()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-sm md:text-base shadow-sm transition-colors">提交答案</button>
                         </div>
                         <div id="unscramble-msg" class="mt-3 text-center font-bold text-sm md:text-base opacity-0 transition-opacity min-h-[24px]"></div>
                     </div>
@@ -391,7 +400,13 @@
         window.soundEnabled = true;
         window.writer = null;
         window.globalScore = 0;
-        window.maxScore = 0; // 全局最高分
+        window.maxScore = 0;
+        
+        // 進度追蹤器
+        window.userProgress = {};
+        window.wordMaxScores = {};
+        window.currentWordIndex = 0;
+        window.currentCharIndex = 0;
         
         window.initAudio = function() {
             if (!window.audioCtx) window.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -428,9 +443,9 @@
             if (event) { event.stopPropagation(); event.preventDefault(); }
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel(); 
-                const cleanText = text.replace(/<[^>]*>?/gm, '').replace(/\[|\]/g, '').replace(/【|】/g, '').replace(/_/g, '什麼').replace(/❌|⚠️|✅|👯|👀|📚|📘|🧩|🧮|💥|，|。/g, ''); 
+                const cleanText = text.replace(/<[^>]*>?/gm, '').replace(/\[|\]/g, '').replace(/【|】/g, '').replace(/_/g, '什麼').replace(/❌|⚠️|✅|👯|👀|📚|📘|🧩|🧮|💥/g, ''); 
                 const utterance = new SpeechSynthesisUtterance(cleanText);
-                utterance.lang = 'zh-TW'; utterance.rate = 0.85; window.speechSynthesis.speak(utterance);
+                utterance.lang = 'zh-HK'; utterance.rate = 0.85; window.speechSynthesis.speak(utterance);
             }
         };
 
@@ -441,12 +456,39 @@
             display.classList.add('pop'); setTimeout(() => display.classList.remove('pop'), 400);
         };
 
+        // 完成任務並派發分數
+        window.completeTask = function(taskType, points, charIndex = null) {
+            const p = window.userProgress[window.currentWordIndex];
+            if (charIndex !== null) {
+                if (p.chars[charIndex][taskType]) return false;
+                p.chars[charIndex][taskType] = true;
+            } else {
+                if (p[taskType]) return false;
+                p[taskType] = true;
+            }
+            p.currentScore += points;
+            window.addScore(points); 
+            
+            const badge = document.getElementById(`word-badge-${window.currentWordIndex}`);
+            if (badge) {
+                const max = window.wordMaxScores[window.currentWordIndex];
+                badge.textContent = `得分: ${p.currentScore}/${max}`;
+                if (p.currentScore === max) {
+                    badge.className = "text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors bg-emerald-100 text-emerald-700";
+                } else {
+                    badge.classList.add('pop');
+                    setTimeout(() => badge.classList.remove('pop'), 300);
+                }
+            }
+            return true;
+        };
+
         // ==========================================
-        // 16組 完整字庫 (移除重組句子的標點符號)
+        // 全新 16組 中二單元八說勤 字庫
         // ==========================================
         window.wordDatabase = [
             {
-                word: "精深造詣", difficulty: 3, introVisual: "🧠🎓",
+                word: "精深造詣", wordEnglish: "Deep knowledge", difficulty: 3, introVisual: "🧠🎓",
                 introContext: "李教授對這門科學的研究非常透徹，達到了極高的水平。",
                 introQuestion: "請問李教授的學問境界可以用什麼詞形容？",
                 wordExplanation: "學問、技術等達到很高深的境界。",
@@ -470,7 +512,7 @@
                 fillInGame: { sentence: "李教授在科學研究上取得了____，受人敬仰。", options: ["精深造詣", "遲鈍", "體會"], correct: "精深造詣" }
             },
             {
-                word: "攀登", difficulty: 2, introVisual: "🧗‍♂️⛰️",
+                word: "攀登", wordEnglish: "Climb", difficulty: 2, introVisual: "🧗‍♂️⛰️",
                 introContext: "探險家們正抓著繩索，一步一步往高山上爬。",
                 introQuestion: "請問他們在做什麼動作？",
                 wordExplanation: "抓住東西往上爬，多指爬山或克服困難。",
@@ -492,7 +534,7 @@
                 fillInGame: { sentence: "為了看日出，我們決定____這座陡峭的高山。", options: ["攀登", "珍惜", "奠定"], correct: "攀登" }
             },
             {
-                word: "珍惜", difficulty: 1, introVisual: "💖🕰️",
+                word: "珍惜", wordEnglish: "Cherish", difficulty: 1, introVisual: "💖🕰️",
                 introContext: "小華把外婆送的手錶小心翼翼地收好，非常愛護它。",
                 introQuestion: "請問小華對手錶的態度是？",
                 wordExplanation: "重視、愛惜，不隨便浪費或破壞。",
@@ -514,7 +556,7 @@
                 fillInGame: { sentence: "水資源很寶貴，我們一定要好好____。", options: ["蒐集", "開拓", "珍惜"], correct: "珍惜" }
             },
             {
-                word: "長年累月", difficulty: 3, introVisual: "🗓️⏳",
+                word: "長年累月", wordEnglish: "Year in, year out", difficulty: 3, introVisual: "🗓️⏳",
                 introContext: "老爺爺每天都在花園裡種樹，過了一年又一年，從不間斷。",
                 introQuestion: "形容經過了很長很長的時間，可以怎麼說？",
                 wordExplanation: "形容經過了很長久的時間。",
@@ -538,7 +580,7 @@
                 fillInGame: { sentence: "鐘乳石是經過____的滴水才形成的自然奇觀。", options: ["遲鈍", "長年累月", "書籍"], correct: "長年累月" }
             },
             {
-                word: "實踐", difficulty: 2, introVisual: "🛠️🏃",
+                word: "實踐", wordEnglish: "Practice", difficulty: 2, introVisual: "🛠️🏃",
                 introContext: "小明把書上學到的環保知識，實際用在日常生活中做回收。",
                 introQuestion: "請問小明的行為稱為什麼？",
                 wordExplanation: "把理論或計畫實際付諸行動去執行。",
@@ -560,7 +602,7 @@
                 fillInGame: { sentence: "光說不練是沒有用的，我們必須親自去____。", options: ["實踐", "建樹", "關鍵"], correct: "實踐" }
             },
             {
-                word: "堅持不懈", difficulty: 3, introVisual: "🏃‍♂️💦",
+                word: "堅持不懈", wordEnglish: "Persevere", difficulty: 3, introVisual: "🏃‍♂️💦",
                 introContext: "即使跑到腳很酸，他依然咬牙不放棄，直到抵達終點。",
                 introQuestion: "形容他不放棄的精神叫什麼？",
                 wordExplanation: "堅定到底，一點也不鬆懈。",
@@ -584,7 +626,7 @@
                 fillInGame: { sentence: "遇到困難時，只要____，最後一定會成功。", options: ["堅持不懈", "艱苦奮鬥", "與日俱增"], correct: "堅持不懈" }
             },
             {
-                word: "建樹", difficulty: 2, introVisual: "🏆🌟",
+                word: "建樹", wordEnglish: "Achievement", difficulty: 2, introVisual: "🏆🌟",
                 introContext: "這位科學家發明了新藥，對人類健康有很大的貢獻。",
                 introQuestion: "形容他做出的偉大成績，可以稱為什麼？",
                 wordExplanation: "建立的功績或偉大的成就。",
@@ -606,7 +648,7 @@
                 fillInGame: { sentence: "這位老校長在教育界有著卓越的____。", options: ["書籍", "建樹", "遲鈍"], correct: "建樹" }
             },
             {
-                word: "與日俱增", difficulty: 3, introVisual: "📈📆",
+                word: "與日俱增", wordEnglish: "Increase day by day", difficulty: 3, introVisual: "📈📆",
                 introContext: "小狗越吃越多，身體一天比一天大。",
                 introQuestion: "形容隨著時間不斷增加，可以怎麼說？",
                 wordExplanation: "隨著時間一天天過去，不斷地增加。",
@@ -630,7 +672,7 @@
                 fillInGame: { sentence: "隨著比賽日期接近，選手們的壓力____。", options: ["與日俱增", "長年累月", "堅持不懈"], correct: "與日俱增" }
             },
             {
-                word: "艱苦奮鬥", difficulty: 3, introVisual: "😓💪",
+                word: "艱苦奮鬥", wordEnglish: "Work hard", difficulty: 3, introVisual: "😓💪",
                 introContext: "即使環境很差，糧食很少，他們依然努力工作不退縮。",
                 introQuestion: "形容在困苦中依然努力拼搏叫什麼？",
                 wordExplanation: "在艱難困苦的環境中，不畏挫折地努力拼搏。",
@@ -654,7 +696,7 @@
                 fillInGame: { sentence: "前人經過____，才為我們創造了現在的繁榮。", options: ["艱苦奮鬥", "實踐", "珍惜"], correct: "艱苦奮鬥" }
             },
             {
-                word: "遲鈍", difficulty: 2, introVisual: "🐢🥱",
+                word: "遲鈍", wordEnglish: "Dull", difficulty: 2, introVisual: "🐢🥱",
                 introContext: "小烏龜聽到聲音後，過了好一會兒才慢慢把頭縮進去。",
                 introQuestion: "形容反應很慢，可以怎麼說？",
                 wordExplanation: "反應遲緩，思想或動作不靈敏。",
@@ -676,7 +718,7 @@
                 fillInGame: { sentence: "這把剪刀太____了，根本剪不斷紙張。", options: ["精深造詣", "遲鈍", "關鍵"], correct: "遲鈍" }
             },
             {
-                word: "書籍", difficulty: 2, introVisual: "📚📗",
+                word: "書籍", wordEnglish: "Books", difficulty: 2, introVisual: "📚📗",
                 introContext: "圖書館的架子上擺滿了一本又一本的故事、百科全書。",
                 introQuestion: "請問這些統稱為什麼？",
                 wordExplanation: "裝訂成冊的著作物，用來閱讀和記錄知識。",
@@ -698,7 +740,7 @@
                 fillInGame: { sentence: "閱讀優良的____，可以豐富我們的知識。", options: ["書籍", "體會", "攀登"], correct: "書籍" }
             },
             {
-                word: "關鍵", difficulty: 2, introVisual: "🔑🚪",
+                word: "關鍵", wordEnglish: "Key", difficulty: 2, introVisual: "🔑🚪",
                 introContext: "這道題非常難，只要找到最重要的一個提示就能解開。",
                 introQuestion: "請問這個提示是解題的什麼？",
                 wordExplanation: "事物中最緊要、起決定作用的部分。",
@@ -720,7 +762,7 @@
                 fillInGame: { sentence: "努力學習是獲得好成績的____。", options: ["建樹", "奠定", "關鍵"], correct: "關鍵" }
             },
             {
-                word: "蒐集", difficulty: 2, introVisual: "🗂️🔍",
+                word: "蒐集", wordEnglish: "Collect", difficulty: 2, introVisual: "🗂️🔍",
                 introContext: "小華到處去尋找不同的郵票，把它們貼在同一本簿子裡。",
                 introQuestion: "請問小華把郵票找來放一起的動作叫？",
                 wordExplanation: "到處尋找並聚集在一起。",
@@ -742,7 +784,7 @@
                 fillInGame: { sentence: "警察正在現場____有用的線索。", options: ["實踐", "蒐集", "開拓"], correct: "蒐集" }
             },
             {
-                word: "開拓", difficulty: 2, introVisual: "🛤️⛏️",
+                word: "開拓", wordEnglish: "Open up", difficulty: 2, introVisual: "🛤️⛏️",
                 introContext: "他們在荒野中砍掉雜草、鋪上石頭，走出一條新路。",
                 introQuestion: "請問他們在做什麼？",
                 wordExplanation: "開闢、擴展新的領域或空間。",
@@ -764,7 +806,7 @@
                 fillInGame: { sentence: "閱讀可以幫助我們____視野，了解世界。", options: ["開拓", "珍惜", "體會"], correct: "開拓" }
             },
             {
-                word: "奠定", difficulty: 2, introVisual: "🧱🏗️",
+                word: "奠定", wordEnglish: "Build", difficulty: 2, introVisual: "🧱🏗️",
                 introContext: "工人在蓋房子前，先在地下打好堅固的水泥底座。",
                 introQuestion: "請問打地基的動作可以用什麼詞形容？",
                 wordExplanation: "建立、安放好基礎。",
@@ -786,7 +828,7 @@
                 fillInGame: { sentence: "小學階段的學習，為未來的發展____了基礎。", options: ["攀登", "蒐集", "奠定"], correct: "奠定" }
             },
             {
-                word: "體會", difficulty: 2, introVisual: "❤️💭",
+                word: "體會", wordEnglish: "Understand", difficulty: 2, introVisual: "❤️💭",
                 introContext: "小明自己洗了一次衣服後，才終於知道媽媽平時有多累。",
                 introQuestion: "請問小明自己做過後，在心裡產生了什麼感覺？",
                 wordExplanation: "親自體驗並在心裡有所領悟。",
@@ -810,31 +852,33 @@
         ];
 
         // ==========================================
-        // 核心業務邏輯
+        // 系統初始化與變數
         // ==========================================
-        window.currentWordData = null;
-        window.currentCharData = null;
-        window.currentFilter = 'all';
-        
-        // 重組句子狀態管理
-        window.unscrambleSlots = []; // 儲存 source index
-        window.validatedSlots = [];  
-        window.unscrambleAttempts = 0;
-
         window.onload = function() {
-            // 計算滿分
-            window.maxScore = 0;
-            window.wordDatabase.forEach(w => {
-                w.chars.forEach(c => {
-                    window.maxScore += 2; // radical
-                    window.maxScore += 2; // write
-                    if(c.twinGame) window.maxScore += 3; // twin
+            // 初始化進度追蹤
+            window.wordDatabase.forEach((data, index) => {
+                let max = 0;
+                let charProgress = [];
+                data.chars.forEach(c => {
+                    max += 4; // radical (2) + write (2)
+                    let hasTwin = !!c.twinGame;
+                    if (hasTwin) max += 3;
+                    charProgress.push({ radical: false, write: false, twin: false, hasTwin: hasTwin });
                 });
-                window.maxScore += 3; // synonym
-                window.maxScore += 3; // context
-                window.maxScore += 5; // fillin
-                window.maxScore += 5; // unscramble
+                max += 16; // synonym(3) + context(3) + fillin(5) + unscramble(5)
+                window.wordMaxScores[index] = max;
+                window.userProgress[index] = {
+                    chars: charProgress,
+                    synonym: false,
+                    context: false,
+                    fillin: false,
+                    unscramble: false,
+                    currentScore: 0
+                };
             });
+
+            // 計算滿分
+            window.maxScore = Object.values(window.wordMaxScores).reduce((a, b) => a + b, 0);
             document.getElementById('max-score-display').textContent = window.maxScore;
             document.getElementById('modal-max-score').textContent = window.maxScore;
 
@@ -844,13 +888,7 @@
             }
         };
 
-        window.filterDifficulty = function(level, btnElem) {
-            window.playSound('pop'); window.currentFilter = level;
-            document.querySelectorAll('.diff-btn').forEach(b => b.className = "diff-btn px-6 py-2 rounded-lg text-slate-500 hover:bg-slate-200 border border-transparent transition-all");
-            btnElem.className = "diff-btn px-6 py-2 rounded-lg text-indigo-900 bg-indigo-200 shadow-sm border border-indigo-300 transition-all";
-            window.renderWordList(level);
-        };
-
+        // --- 左側清單渲染 (加入分數與完成狀態) ---
         window.renderWordList = function(level) {
             const list = document.getElementById('word-list');
             list.innerHTML = '';
@@ -858,12 +896,25 @@
                 if (level === 'all' || data.difficulty === level) {
                     const li = document.createElement('li');
                     li.className = "flex-shrink-0";
+                    
+                    const progress = window.userProgress[index];
+                    const max = window.wordMaxScores[index];
+                    const isComplete = progress.currentScore === max;
+                    const badgeClass = isComplete ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600';
+                    const activeClass = index === window.currentWordIndex ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200 bg-white hover:bg-indigo-50 hover:border-indigo-300';
+                    
+                    // 用 Array.from 取代字串切割以防止 Emoji 變亂碼
+                    const visualEmoji = Array.from(data.introVisual)[0];
+
                     li.innerHTML = `
-                        <button onclick="window.selectWord(${index}, this)" class="w-48 text-left px-4 py-3 rounded-xl border-2 border-slate-200 bg-white hover:bg-indigo-50 hover:border-indigo-300 shadow-sm transition-all flex items-center gap-3">
-                            <span class="text-3xl">${Array.from(data.introVisual)[0]}</span>
+                        <button onclick="window.selectWord(${index}, this)" class="w-56 text-left px-4 py-3 rounded-xl border-2 ${activeClass} shadow-sm transition-all flex items-center gap-3">
+                            <span class="text-3xl">${visualEmoji}</span>
                             <div class="flex-1 overflow-hidden">
                                 <div class="font-bold text-lg text-slate-800 truncate">${data.word}</div>
-                                <div class="text-xs text-amber-500 mt-1">${'⭐'.repeat(data.difficulty)}</div>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <div class="text-xs text-amber-500">${'⭐'.repeat(data.difficulty)}</div>
+                                    <div id="word-badge-${index}" class="text-[10px] font-bold px-2 py-0.5 rounded-full transition-colors ${badgeClass}">得分: ${progress.currentScore}/${max}</div>
+                                </div>
                             </div>
                         </button>`;
                     list.appendChild(li);
@@ -873,6 +924,7 @@
 
         window.selectWord = function(index, btnElem) {
             window.playSound('pop');
+            window.currentWordIndex = index;
             document.querySelectorAll('#word-list button').forEach(b => {
                 b.classList.remove('border-indigo-500', 'bg-indigo-50');
                 b.classList.add('border-slate-200');
@@ -918,9 +970,12 @@
             if(display.firstChild) display.firstChild.click();
         };
 
-        // --- 字與筆順 ---
+        // --- 字形防呆邏輯 ---
         window.loadCharacter = function(charIndex, element) {
             window.playSound('pop');
+            window.currentCharIndex = charIndex;
+            const pChar = window.userProgress[window.currentWordIndex].chars[charIndex];
+
             const siblings = element.parentElement.children;
             for(let s of siblings) s.classList.remove('border-indigo-300', 'bg-indigo-50', 'shadow-inner');
             element.classList.add('border-indigo-300', 'bg-indigo-50', 'shadow-inner');
@@ -931,35 +986,47 @@
                 width: canvas.clientWidth || 280, height: canvas.clientHeight || 280, 
                 padding: 15, strokeAnimationSpeed: 1, delayBetweenStrokes: 100, 
                 strokeColor: '#1e293b', radicalColor: '#4f46e5', showOutline: true, outlineColor: '#e2e8f0',
-                drawingWidth: 20, 
-                showHintAfterMisses: 1, 
-                hintAnimationSpeed: 0.3 
+                drawingWidth: 20, showHintAfterMisses: 1, hintAnimationSpeed: 0.3 
             });
 
+            const quizBtn = document.getElementById('quiz-btn');
+            if (pChar.write) {
+                quizBtn.innerHTML = '✅ 已完成';
+                quizBtn.className = 'flex-1 py-3 bg-emerald-500 text-white rounded-lg font-bold text-base md:text-lg cursor-default';
+                quizBtn.onclick = null;
+            } else {
+                quizBtn.innerHTML = '✍️ 測驗 <span class="bg-amber-300 text-amber-900 px-2 py-0.5 rounded text-sm shadow-sm whitespace-nowrap">⭐ +2</span>';
+                quizBtn.className = 'flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-base md:text-lg transition-colors flex justify-center items-center gap-2';
+                quizBtn.onclick = window.startQuiz;
+            }
+
             document.getElementById('components-section').classList.add('hidden', 'opacity-0');
-            document.getElementById('twins-section').classList.add('hidden'); document.getElementById('char-hint-box').classList.add('hidden');
+            document.getElementById('twins-section').classList.add('hidden'); 
+            document.getElementById('char-hint-box').classList.add('hidden');
             
-            // 部首選單
             const radicalOptions = document.getElementById('radical-options'); radicalOptions.innerHTML = '';
             let options = [window.currentCharData.radical, ...window.currentCharData.wrongRadicals].sort(() => Math.random() - 0.5);
             options.forEach(rad => {
                 const btn = document.createElement('button');
-                btn.className = "radical-opt-btn text-3xl kaishu font-bold bg-white border-2 border-indigo-200 text-indigo-700 rounded-xl px-6 py-4 shadow-sm hover:bg-indigo-50 hover:border-indigo-400 focus:outline-none w-20 h-20 flex items-center justify-center";
-                btn.textContent = rad; btn.onclick = () => window.checkRadical(rad, window.currentCharData.radical, btn);
+                btn.textContent = rad;
+                
+                if (pChar.radical) {
+                    if (rad === window.currentCharData.radical) {
+                        btn.className = "radical-opt-btn text-3xl kaishu font-bold bg-emerald-100 border-2 border-emerald-500 text-emerald-700 rounded-xl px-6 py-4 shadow-sm w-20 h-20 flex items-center justify-center cursor-default transform scale-105";
+                    } else {
+                        btn.className = "radical-opt-btn text-3xl kaishu font-bold bg-white border-2 border-indigo-200 text-indigo-700 rounded-xl px-6 py-4 shadow-sm w-20 h-20 flex items-center justify-center opacity-40 pointer-events-none";
+                    }
+                } else {
+                    btn.className = "radical-opt-btn text-3xl kaishu font-bold bg-white border-2 border-indigo-200 text-indigo-700 rounded-xl px-6 py-4 shadow-sm hover:bg-indigo-50 hover:border-indigo-400 focus:outline-none w-20 h-20 flex items-center justify-center";
+                    btn.onclick = () => window.checkRadical(rad, window.currentCharData.radical, btn);
+                }
                 radicalOptions.appendChild(btn);
             });
             document.getElementById('char-hint-text').textContent = window.currentCharData.hint;
-        };
 
-        window.checkRadical = function(selected, correct, btn) {
-            if (selected === correct) {
-                window.playSound('correct'); window.addScore(2);
-                btn.classList.add('correct');
-                Array.from(btn.parentElement.children).forEach(child => { if(child !== btn) {child.style.opacity = '0.4'; child.style.pointerEvents = 'none';} });
-                
+            if (pChar.radical) {
                 const compSection = document.getElementById('components-section'); 
-                compSection.classList.remove('hidden');
-                setTimeout(() => compSection.classList.remove('opacity-0'), 50);
+                compSection.classList.remove('hidden', 'opacity-0');
                 
                 const compContainer = document.getElementById('info-components'); compContainer.innerHTML = '';
                 window.currentCharData.components.forEach((comp, idx) => {
@@ -969,6 +1036,29 @@
                 document.getElementById('char-hint-box').classList.remove('hidden');
 
                 if(window.currentCharData.twinGame) { window.renderTwinGame(window.currentCharData.twinGame); }
+            }
+        };
+
+        window.checkRadical = function(selected, correct, btn) {
+            if (selected === correct) {
+                if (window.completeTask('radical', 2, window.currentCharIndex)) {
+                    window.playSound('correct');
+                    btn.classList.add('correct');
+                    Array.from(btn.parentElement.children).forEach(child => { if(child !== btn) {child.style.opacity = '0.4'; child.style.pointerEvents = 'none';} });
+                    
+                    const compSection = document.getElementById('components-section'); 
+                    compSection.classList.remove('hidden');
+                    setTimeout(() => compSection.classList.remove('opacity-0'), 50);
+                    
+                    const compContainer = document.getElementById('info-components'); compContainer.innerHTML = '';
+                    window.currentCharData.components.forEach((comp, idx) => {
+                        compContainer.innerHTML += `<span class="text-4xl component-block">${comp}</span>`;
+                        if(idx < window.currentCharData.components.length - 1) compContainer.innerHTML += `<span class="text-3xl text-indigo-300 font-black px-2">+</span>`;
+                    });
+                    document.getElementById('char-hint-box').classList.remove('hidden');
+
+                    if(window.currentCharData.twinGame) { window.renderTwinGame(window.currentCharData.twinGame); }
+                }
             } else {
                 window.playSound('wrong'); btn.classList.add('shake', 'bg-rose-50', 'border-rose-400', 'text-rose-600');
                 setTimeout(() => btn.classList.remove('shake'), 400);
@@ -979,26 +1069,45 @@
             const container = document.getElementById('twin-buttons-container');
             const explanation = document.getElementById('twin-explanation');
             const section = document.getElementById('twins-section');
+            const pChar = window.userProgress[window.currentWordIndex].chars[window.currentCharIndex];
             
             explanation.classList.add('hidden'); container.innerHTML = '';
             let options = [twinData.correct, twinData.wrong].sort(() => Math.random() - 0.5);
+            
             options.forEach(opt => {
                 const btn = document.createElement('button');
-                btn.className = "twin-btn w-32 text-7xl kaishu border-[6px] border-rose-200 bg-white rounded-3xl text-slate-700 shadow-sm focus:outline-none flex items-center justify-center";
-                btn.textContent = opt; btn.onclick = () => window.checkTwinGame(opt, twinData.correct, twinData.diff, btn);
+                btn.textContent = opt;
+                
+                if (pChar.twin) {
+                    if (opt === twinData.correct) {
+                        btn.className = "twin-btn w-32 text-7xl kaishu border-[6px] border-emerald-500 bg-emerald-50 text-emerald-800 rounded-3xl shadow-sm flex items-center justify-center cursor-default";
+                    } else {
+                        btn.className = "twin-btn w-32 text-7xl kaishu border-[6px] border-rose-200 bg-white text-slate-700 rounded-3xl shadow-sm flex items-center justify-center opacity-50 pointer-events-none";
+                    }
+                } else {
+                    btn.className = "twin-btn w-32 text-7xl kaishu border-[6px] border-rose-200 bg-white rounded-3xl text-slate-700 shadow-sm focus:outline-none flex items-center justify-center";
+                    btn.onclick = () => window.checkTwinGame(opt, twinData.correct, twinData.diff, btn);
+                }
                 container.appendChild(btn);
             });
+            
+            if (pChar.twin) {
+                explanation.innerHTML = `<span class="text-2xl">👀</span> <span class="flex-1">${twinData.diff}</span>`;
+                explanation.classList.remove('hidden');
+            }
             section.classList.remove('hidden'); section.classList.add('fade-in-up');
         };
 
         window.checkTwinGame = function(selected, correct, diffText, btnElem) {
             const explanation = document.getElementById('twin-explanation');
             if(selected === correct) {
-                window.playSound('correct'); window.addScore(3);
-                btnElem.classList.add('correct');
-                Array.from(btnElem.parentElement.children).forEach(c => { if(c !== btnElem) { c.classList.add('wrong'); } });
-                explanation.innerHTML = `<span class="text-2xl">👀</span> <span class="flex-1">${diffText}</span>`;
-                explanation.classList.remove('hidden'); explanation.classList.add('pop');
+                if (window.completeTask('twin', 3, window.currentCharIndex)) {
+                    window.playSound('correct');
+                    btnElem.classList.add('correct');
+                    Array.from(btnElem.parentElement.children).forEach(c => { if(c !== btnElem) { c.classList.add('wrong'); } });
+                    explanation.innerHTML = `<span class="text-2xl">👀</span> <span class="flex-1">${diffText}</span>`;
+                    explanation.classList.remove('hidden'); explanation.classList.add('pop');
+                }
             } else {
                 window.playSound('wrong'); btnElem.classList.add('wrong', 'shake');
                 setTimeout(() => btnElem.classList.remove('shake'), 400);
@@ -1010,7 +1119,15 @@
             if(!window.writer) return; window.playSound('pop');
             window.writer.quiz({
                 onMistake: function() { window.playSound('wrong'); }, onCorrectStroke: function() { window.playSound('pop'); },
-                onComplete: function() { window.playSound('correct'); window.addScore(2); }
+                onComplete: function() { 
+                    if (window.completeTask('write', 2, window.currentCharIndex)) {
+                        window.playSound('correct'); 
+                        const quizBtn = document.getElementById('quiz-btn');
+                        quizBtn.innerHTML = '✅ 已完成';
+                        quizBtn.className = 'flex-1 py-3 bg-emerald-500 text-white rounded-lg font-bold text-base md:text-lg cursor-default';
+                        quizBtn.onclick = null;
+                    }
+                }
             });
         };
 
@@ -1029,16 +1146,28 @@
             document.getElementById('minefield-reason').textContent = secret.minefield.reason;
         };
 
-        window.playSecretGuideTTS = function(e) {
+        // Split TTS logic
+        window.playBlockTTS = function(e) {
             const secret = window.currentWordData.secret;
-            const text = `積木拼：${secret.blocks.join('加')}等於${window.currentWordData.word}。` +
-                         `百搭公式：${secret.formula.pattern}。${secret.formula.example}。` +
-                         `地雷區：不要說 ${secret.minefield.wrong}。${secret.minefield.reason}`;
+            const text = `把字當積木拼：${secret.blocks.join('加')}等於${window.currentWordData.word}。`;
+            window.speakText(text, e);
+        };
+
+        window.playFormulaTTS = function(e) {
+            const secret = window.currentWordData.secret;
+            const text = `百搭公式：${secret.formula.pattern}。${secret.formula.example}`;
+            window.speakText(text, e);
+        };
+
+        window.playMinefieldTTS = function(e) {
+            const secret = window.currentWordData.secret;
+            const text = `地雷區防錯：不要說 ${secret.minefield.wrong}。${secret.minefield.reason}`;
             window.speakText(text, e);
         };
 
         window.initSemanticGames = function() {
             const sg = window.currentWordData.semanticGames;
+            const p = window.userProgress[window.currentWordIndex];
             
             // Synonym
             document.getElementById('synonym-q').textContent = `哪一個是「${window.currentWordData.word}」的好朋友（近義詞）？`;
@@ -1046,11 +1175,22 @@
             let synOpts = [...sg.synonym.options].sort(() => Math.random() - 0.5);
             synOpts.forEach(opt => {
                 const btn = document.createElement('button');
-                btn.className = "px-4 py-2 bg-white border border-indigo-200 text-indigo-700 font-bold text-lg rounded-lg shadow-sm hover:bg-indigo-50 transition-all flex-1 focus:outline-none";
-                btn.textContent = opt; btn.onclick = () => window.checkSynonym(opt, sg.synonym.correct, btn);
+                btn.textContent = opt; 
+                if (p.synonym) {
+                    if (opt === sg.synonym.correct) {
+                        btn.className = "px-4 py-2 bg-emerald-500 border border-emerald-600 text-white font-bold text-lg rounded-lg shadow-md flex-1 cursor-default";
+                    } else {
+                        btn.className = "px-4 py-2 bg-white border border-indigo-200 text-indigo-700 font-bold text-lg rounded-lg flex-1 opacity-30 pointer-events-none";
+                    }
+                } else {
+                    btn.className = "px-4 py-2 bg-white border border-indigo-200 text-indigo-700 font-bold text-lg rounded-lg shadow-sm hover:bg-indigo-50 transition-all flex-1 focus:outline-none";
+                    btn.onclick = () => window.checkSynonym(opt, sg.synonym.correct, btn);
+                }
                 synOptContainer.appendChild(btn);
             });
-            document.getElementById('synonym-msg').style.opacity = '0';
+            const sMsg = document.getElementById('synonym-msg');
+            if (p.synonym) { sMsg.textContent = "✅ 已完成"; sMsg.className = "mt-3 text-center font-bold text-emerald-600"; sMsg.style.opacity = '1'; }
+            else { sMsg.style.opacity = '0'; }
 
             // Context 
             document.getElementById('context-q').textContent = `哪一個情況是「${window.currentWordData.word}」？`;
@@ -1059,21 +1199,33 @@
             ctxObjs.sort(() => Math.random() - 0.5);
             ctxObjs.forEach(obj => {
                 const btn = document.createElement('button');
-                btn.className = "flex items-center justify-between px-4 py-3 bg-white border border-teal-200 text-teal-800 font-bold text-lg rounded-lg shadow-sm hover:bg-teal-50 transition-all w-full text-left focus:outline-none";
+                if (p.context) {
+                    if (obj.isCorrect) {
+                        btn.className = "flex items-center justify-between px-4 py-3 bg-emerald-500 border border-emerald-600 text-white font-bold text-lg rounded-lg shadow-md w-full text-left cursor-default";
+                    } else {
+                        btn.className = "flex items-center justify-between px-4 py-3 bg-white border border-teal-200 text-teal-800 font-bold text-lg rounded-lg w-full text-left opacity-30 pointer-events-none";
+                    }
+                } else {
+                    btn.className = "flex items-center justify-between px-4 py-3 bg-white border border-teal-200 text-teal-800 font-bold text-lg rounded-lg shadow-sm hover:bg-teal-50 transition-all w-full text-left focus:outline-none";
+                    btn.onclick = () => window.checkContext(obj.isCorrect, btn);
+                }
                 btn.innerHTML = `<span>${obj.text}</span><span class="text-2xl ml-2">${obj.emoji}</span>`;
-                btn.onclick = () => window.checkContext(obj.isCorrect, btn);
                 ctxOptContainer.appendChild(btn);
             });
-            document.getElementById('context-msg').style.opacity = '0';
+            const cMsg = document.getElementById('context-msg');
+            if (p.context) { cMsg.textContent = "✅ 已完成"; cMsg.className = "mt-3 text-center font-bold text-emerald-600"; cMsg.style.opacity = '1'; }
+            else { cMsg.style.opacity = '0'; }
         };
 
         window.checkSynonym = function(selected, correct, btnElem) {
             const msg = document.getElementById('synonym-msg');
             if(selected === correct) {
-                window.playSound('correct'); window.addScore(3);
-                btnElem.className = "px-4 py-2 bg-emerald-500 border border-emerald-600 text-white font-bold text-lg rounded-lg shadow-md flex-1 focus:outline-none";
-                Array.from(btnElem.parentElement.children).forEach(c => { if(c !== btnElem) c.style.opacity = '0.3'; c.style.pointerEvents = 'none'; });
-                msg.textContent = "🎉 答對了！他們是好朋友！"; msg.className = "mt-3 text-center font-bold text-emerald-600 pop"; msg.style.opacity = '1';
+                if (window.completeTask('synonym', 3)) {
+                    window.playSound('correct'); 
+                    btnElem.className = "px-4 py-2 bg-emerald-500 border border-emerald-600 text-white font-bold text-lg rounded-lg shadow-md flex-1 focus:outline-none";
+                    Array.from(btnElem.parentElement.children).forEach(c => { if(c !== btnElem) c.style.opacity = '0.3'; c.style.pointerEvents = 'none'; });
+                    msg.textContent = "🎉 答對了！他們是好朋友！"; msg.className = "mt-3 text-center font-bold text-emerald-600 pop"; msg.style.opacity = '1';
+                }
             } else {
                 window.playSound('wrong'); btnElem.classList.add('shake', 'bg-rose-50', 'border-rose-400', 'text-rose-600');
                 setTimeout(() => btnElem.classList.remove('shake', 'bg-rose-50', 'border-rose-400', 'text-rose-600'), 400);
@@ -1083,10 +1235,12 @@
         window.checkContext = function(isCorrect, btnElem) {
             const msg = document.getElementById('context-msg');
             if(isCorrect) {
-                window.playSound('correct'); window.addScore(3);
-                btnElem.className = "flex items-center justify-between px-4 py-3 bg-emerald-500 border border-emerald-600 text-white font-bold text-lg rounded-lg shadow-md w-full text-left focus:outline-none";
-                Array.from(btnElem.parentElement.children).forEach(c => { if(c !== btnElem) c.style.opacity = '0.3'; c.style.pointerEvents = 'none'; });
-                msg.textContent = "🎉 觀察力真好，答對了！"; msg.className = "mt-3 text-center font-bold text-emerald-600 pop"; msg.style.opacity = '1';
+                if (window.completeTask('context', 3)) {
+                    window.playSound('correct'); 
+                    btnElem.className = "flex items-center justify-between px-4 py-3 bg-emerald-500 border border-emerald-600 text-white font-bold text-lg rounded-lg shadow-md w-full text-left focus:outline-none";
+                    Array.from(btnElem.parentElement.children).forEach(c => { if(c !== btnElem) c.style.opacity = '0.3'; c.style.pointerEvents = 'none'; });
+                    msg.textContent = "🎉 觀察力真好，答對了！"; msg.className = "mt-3 text-center font-bold text-emerald-600 pop"; msg.style.opacity = '1';
+                }
             } else {
                 window.playSound('wrong'); btnElem.classList.add('shake', 'bg-rose-50', 'border-rose-400', 'text-rose-600');
                 setTimeout(() => btnElem.classList.remove('shake', 'bg-rose-50', 'border-rose-400', 'text-rose-600'), 400);
@@ -1095,15 +1249,34 @@
 
         // --- Fill in & Unscramble ---
         window.initSentenceGames = function() {
-            // 句子重組狀態
             window.unscrambleAttempts = 0;
             const targetWords = window.currentWordData.sentenceUnscramble;
+            window.shuffledWords = [...targetWords].sort(() => Math.random() - 0.5);
             window.unscrambleSlots = new Array(targetWords.length).fill(null);
             window.validatedSlots = new Array(targetWords.length).fill(false);
-            window.shuffledWords = [...targetWords].sort(() => Math.random() - 0.5);
-            window.renderUnscramble();
+            
+            const p = window.userProgress[window.currentWordIndex];
 
-            // 造句填空
+            // 預載入重組答案
+            if (p.unscramble) {
+                let availableIndices = window.shuffledWords.map((w, i) => i);
+                for (let i = 0; i < targetWords.length; i++) {
+                    let found = availableIndices.find(idx => window.shuffledWords[idx] === targetWords[i]);
+                    window.unscrambleSlots[i] = found;
+                    window.validatedSlots[i] = true;
+                    availableIndices = availableIndices.filter(idx => idx !== found);
+                }
+                document.getElementById('unscramble-reset-btn').style.display = 'none';
+                document.getElementById('unscramble-submit-btn').style.display = 'none';
+                const uMsg = document.getElementById('unscramble-msg');
+                uMsg.textContent = "✅ 已完成"; uMsg.className = "mt-3 text-center font-bold text-emerald-600"; uMsg.style.opacity = '1';
+            } else {
+                document.getElementById('unscramble-reset-btn').style.display = 'block';
+                document.getElementById('unscramble-submit-btn').style.display = 'block';
+                document.getElementById('unscramble-msg').style.opacity = '0';
+            }
+
+            window.renderUnscramble();
             window.renderFillInGame();
         };
 
@@ -1111,33 +1284,54 @@
             const fillData = window.currentWordData.fillInGame;
             const display = document.getElementById('fill-in-sentence-display');
             const optionsContainer = document.getElementById('fill-in-options');
-            document.getElementById('fill-in-msg').style.opacity = '0';
+            const msg = document.getElementById('fill-in-msg');
+            const p = window.userProgress[window.currentWordIndex];
+
+            let sentenceHTML;
+            if (p.fillin) {
+                sentenceHTML = fillData.sentence.replace('____', `<span class="inline-block px-2 text-emerald-700 bg-emerald-50 border-b-2 border-emerald-500 font-black mx-1 align-bottom rounded-t-sm text-center">${fillData.correct}</span>`);
+            } else {
+                sentenceHTML = fillData.sentence.replace('____', '<span class="inline-block w-28 h-8 border-b-2 border-indigo-400 mx-1 align-bottom bg-white rounded-t-sm" id="fill-in-blank"></span>');
+            }
             
-            const sentenceHTML = fillData.sentence.replace('____', '<span class="inline-block w-28 h-8 border-b-2 border-indigo-400 mx-1 align-bottom bg-white rounded-t-sm" id="fill-in-blank"></span>');
             display.innerHTML = `
                 <div class="flex items-start gap-2">
                     <p class="flex-1">${sentenceHTML}</p>
-                    <button onclick="window.speakText('${fillData.sentence.replace('____', '什麼')}', event)" class="tts-btn flex-shrink-0 w-10 h-10 rounded-full bg-slate-200 text-slate-600 shadow-sm flex justify-center items-center text-lg">🗣️</button>
+                    <button onclick="window.speakText('${fillData.sentence.replace('____', p.fillin ? fillData.correct : '什麼')}', event)" class="tts-btn flex-shrink-0 w-10 h-10 rounded-full bg-slate-200 text-slate-600 shadow-sm flex justify-center items-center text-lg">🗣️</button>
                 </div>`;
 
             optionsContainer.innerHTML = '';
             let options = [...fillData.options].sort(() => Math.random() - 0.5);
             options.forEach(opt => {
                 const btn = document.createElement('button');
-                btn.className = "px-5 py-2 bg-white border border-slate-300 text-slate-700 font-bold text-lg rounded-lg shadow-sm hover:bg-slate-100 transition-all active:scale-95 focus:outline-none";
-                btn.textContent = opt; btn.onclick = () => window.checkFillIn(opt, fillData.correct, btn);
+                btn.textContent = opt; 
+                if (p.fillin) {
+                    if (opt === fillData.correct) {
+                        btn.className = "px-5 py-2 bg-emerald-500 border border-emerald-600 text-white font-bold text-lg rounded-lg shadow-md cursor-default";
+                    } else {
+                        btn.className = "px-5 py-2 bg-white border border-slate-300 text-slate-700 font-bold text-lg rounded-lg opacity-30 pointer-events-none";
+                    }
+                } else {
+                    btn.className = "px-5 py-2 bg-white border border-slate-300 text-slate-700 font-bold text-lg rounded-lg shadow-sm hover:bg-slate-100 transition-all active:scale-95 focus:outline-none";
+                    btn.onclick = () => window.checkFillIn(opt, fillData.correct, btn);
+                }
                 optionsContainer.appendChild(btn);
             });
+
+            if (p.fillin) { msg.textContent = "✅ 已完成"; msg.className = "mt-4 text-center font-bold text-emerald-600"; msg.style.opacity = '1'; }
+            else { msg.style.opacity = '0'; }
         };
 
         window.checkFillIn = function(selected, correct, btnElem) {
             const msg = document.getElementById('fill-in-msg'); const blank = document.getElementById('fill-in-blank');
             if (selected === correct) {
-                window.playSound('correct'); window.addScore(5);
-                blank.className = "inline-block px-2 text-emerald-700 bg-emerald-50 border-b-2 border-emerald-500 font-black mx-1 align-bottom rounded-t-sm pop text-center";
-                blank.textContent = selected;
-                for(let b of btnElem.parentElement.children) { b.style.pointerEvents = 'none'; b.className = b === btnElem ? "px-5 py-2 bg-emerald-500 border border-emerald-600 text-white font-bold text-lg rounded-lg shadow-md" : "px-5 py-2 bg-white border border-slate-300 text-slate-700 font-bold text-lg rounded-lg opacity-30"; }
-                msg.textContent = "🎉 句子通順，答對了！"; msg.className = "mt-4 text-center font-bold text-emerald-600 pop"; msg.style.opacity = '1';
+                if (window.completeTask('fillin', 5)) {
+                    window.playSound('correct'); 
+                    blank.className = "inline-block px-2 text-emerald-700 bg-emerald-50 border-b-2 border-emerald-500 font-black mx-1 align-bottom rounded-t-sm pop text-center";
+                    blank.textContent = selected;
+                    for(let b of btnElem.parentElement.children) { b.style.pointerEvents = 'none'; b.className = b === btnElem ? "px-5 py-2 bg-emerald-500 border border-emerald-600 text-white font-bold text-lg rounded-lg shadow-md" : "px-5 py-2 bg-white border border-slate-300 text-slate-700 font-bold text-lg rounded-lg opacity-30"; }
+                    msg.textContent = "🎉 句子通順，答對了！"; msg.className = "mt-4 text-center font-bold text-emerald-600 pop"; msg.style.opacity = '1';
+                }
             } else {
                 window.playSound('wrong'); btnElem.classList.add('shake', 'bg-rose-50', 'border-rose-400', 'text-rose-600');
                 msg.textContent = "Oops! 這個詞不太適合喔。"; msg.className = "mt-4 text-center font-bold text-rose-500"; msg.style.opacity = '1';
@@ -1145,34 +1339,23 @@
             }
         };
 
-        // --- 拖拉方格版 邏輯重組 (支援 Drag and Drop & 點擊) ---
+        // --- 拖拉方格版 邏輯重組 ---
         window.handleDragStart = function(e, poolIdx) {
             e.dataTransfer.setData('text/plain', poolIdx);
         };
-        
-        window.allowDrop = function(e) {
-            e.preventDefault();
-        };
-
+        window.allowDrop = function(e) { e.preventDefault(); };
         window.handleDrop = function(e, slotIdx) {
             e.preventDefault();
             const poolIdx = parseInt(e.dataTransfer.getData('text/plain'));
             if (!isNaN(poolIdx) && !window.validatedSlots[slotIdx]) {
                 window.playSound('pop');
-                
-                // 若該位置已有字，先清空
-                if(window.unscrambleSlots[slotIdx] !== null) {
-                    window.unscrambleSlots[slotIdx] = null;
-                }
-                
-                // 若該字已在其他位置，移除舊位置
+                if(window.unscrambleSlots[slotIdx] !== null) window.unscrambleSlots[slotIdx] = null;
                 const existingSlotIndex = window.unscrambleSlots.indexOf(poolIdx);
-                if(existingSlotIndex !== -1) {
-                    window.unscrambleSlots[existingSlotIndex] = null;
-                }
-
+                if(existingSlotIndex !== -1) window.unscrambleSlots[existingSlotIndex] = null;
                 window.unscrambleSlots[slotIdx] = poolIdx;
-                document.getElementById('unscramble-msg').style.opacity = '0';
+                if (!window.userProgress[window.currentWordIndex].unscramble) {
+                    document.getElementById('unscramble-msg').style.opacity = '0';
+                }
                 window.renderUnscramble();
             }
         };
@@ -1181,37 +1364,30 @@
             const pool = document.getElementById('word-pool'); 
             const drop = document.getElementById('drop-zone');
             pool.innerHTML = ''; drop.innerHTML = '';
-
             const targetWords = window.currentWordData.sentenceUnscramble;
+            const p = window.userProgress[window.currentWordIndex];
 
-            // 繪製空槽或已放置的詞語 (Drop Zones)
             for (let i = 0; i < targetWords.length; i++) {
                 const slotBox = document.createElement('div');
-                
-                // 移除標點判斷，統一寬度
                 slotBox.className = `min-w-[40px] md:min-w-[60px] h-12 md:h-14 rounded-lg border-2 border-dashed border-slate-300 flex items-center justify-center bg-slate-50 relative transition-all px-2 slot-box`;
-                // 綁定 Drop 事件
-                slotBox.ondragover = window.allowDrop;
-                slotBox.ondrop = (e) => window.handleDrop(e, i);
+                
+                if (!p.unscramble) {
+                    slotBox.ondragover = window.allowDrop;
+                    slotBox.ondrop = (e) => window.handleDrop(e, i);
+                }
                 
                 const wordIdx = window.unscrambleSlots[i];
-                if (wordIdx !== null) {
+                if (wordIdx !== null && wordIdx !== undefined) {
                     const wordStr = window.shuffledWords[wordIdx];
                     const block = document.createElement('div');
                     
-                    if (window.validatedSlots[i]) {
-                        // 驗證正確，綠色鎖定
+                    if (window.validatedSlots[i] || p.unscramble) {
                         block.className = "absolute inset-0 bg-emerald-500 border border-emerald-600 text-white font-bold text-lg rounded-lg shadow-md flex items-center justify-center cursor-default";
                     } else {
-                        // 尚未驗證正確，可點擊取消
                         block.className = "absolute inset-0 bg-indigo-500 border border-indigo-600 text-white font-bold text-lg rounded-lg shadow-md flex items-center justify-center cursor-pointer pop hover:bg-indigo-600 transition-colors word-block";
                         block.onclick = () => window.removeWordFromSlot(i);
-                        // 也可以再拖移出來
                         block.draggable = true;
-                        block.ondragstart = (e) => {
-                            window.handleDragStart(e, wordIdx);
-                            setTimeout(() => window.removeWordFromSlot(i), 10);
-                        };
+                        block.ondragstart = (e) => { window.handleDragStart(e, wordIdx); setTimeout(() => window.removeWordFromSlot(i), 10); };
                     }
                     block.id = `slot-block-${i}`;
                     block.textContent = wordStr;
@@ -1224,22 +1400,20 @@
                 drop.appendChild(slotBox);
             }
 
-            // 繪製詞語庫 (Draggables)
-            window.shuffledWords.forEach((word, idx) => {
-                const isUsed = window.unscrambleSlots.includes(idx);
-                const btn = document.createElement('div');
-                btn.className = `word-block px-4 py-2 bg-white border border-slate-300 text-slate-700 font-bold text-lg rounded-lg shadow-sm ${isUsed ? 'opacity-0 pointer-events-none transform scale-50' : 'hover:bg-slate-50'}`;
-                btn.textContent = word; 
-                
-                // 拖拉或點擊
-                if(!isUsed) {
-                    btn.draggable = true;
-                    btn.ondragstart = (e) => window.handleDragStart(e, idx);
-                    btn.onclick = () => window.selectWordForSentence(idx);
-                }
-                
-                pool.appendChild(btn);
-            });
+            if (!p.unscramble) {
+                window.shuffledWords.forEach((word, idx) => {
+                    const isUsed = window.unscrambleSlots.includes(idx);
+                    const btn = document.createElement('div');
+                    btn.className = `word-block px-4 py-2 bg-white border border-slate-300 text-slate-700 font-bold text-lg rounded-lg shadow-sm ${isUsed ? 'opacity-0 pointer-events-none transform scale-50' : 'hover:bg-slate-50'}`;
+                    btn.textContent = word; 
+                    if(!isUsed) {
+                        btn.draggable = true;
+                        btn.ondragstart = (e) => window.handleDragStart(e, idx);
+                        btn.onclick = () => window.selectWordForSentence(idx);
+                    }
+                    pool.appendChild(btn);
+                });
+            }
         };
 
         window.selectWordForSentence = function(poolIdx) {
@@ -1274,12 +1448,9 @@
             const targetWords = window.currentWordData.sentenceUnscramble;
             const msg = document.getElementById('unscramble-msg');
 
-            // 檢查是否全填滿
             if (window.unscrambleSlots.includes(null)) {
                 window.playSound('wrong');
-                msg.textContent = "💡 請把所有方格都填滿喔！";
-                msg.className = "mt-3 text-center font-bold text-amber-500 pop";
-                msg.style.opacity = '1';
+                msg.textContent = "💡 請把所有方格都填滿喔！"; msg.className = "mt-3 text-center font-bold text-amber-500 pop"; msg.style.opacity = '1';
                 setTimeout(() => { msg.style.opacity = '0'; }, 2000);
                 return;
             }
@@ -1288,8 +1459,7 @@
             let anyWrong = false;
 
             for (let i = 0; i < targetWords.length; i++) {
-                if (window.validatedSlots[i]) continue; // 已經是對的就不管
-
+                if (window.validatedSlots[i]) continue;
                 const wordIdx = window.unscrambleSlots[i];
                 const wordStr = window.shuffledWords[wordIdx];
                 const block = document.getElementById(`slot-block-${i}`);
@@ -1298,12 +1468,10 @@
                     window.validatedSlots[i] = true;
                     if(block) {
                         block.className = "absolute inset-0 bg-emerald-500 border border-emerald-600 text-white font-bold text-lg rounded-lg shadow-md flex items-center justify-center pop cursor-default";
-                        block.onclick = null;
-                        block.draggable = false;
+                        block.onclick = null; block.draggable = false;
                     }
                 } else {
-                    allCorrect = false;
-                    anyWrong = true;
+                    allCorrect = false; anyWrong = true;
                     if(block) {
                         block.className = "absolute inset-0 bg-rose-500 border border-rose-600 text-white font-bold text-lg rounded-lg shadow-md flex items-center justify-center shake word-block cursor-pointer";
                     }
@@ -1311,16 +1479,15 @@
             }
             
             if (allCorrect) {
-                window.playSound('correct'); window.addScore(5);
-                msg.textContent = "🎉 恭喜你排對了！句子非常通順！"; 
-                msg.className = "mt-3 text-center font-bold text-emerald-600 pop"; 
-                msg.style.opacity = '1';
-                window.unscrambleAttempts = 0;
+                if (window.completeTask('unscramble', 5)) {
+                    window.playSound('correct'); 
+                    msg.textContent = "🎉 恭喜你排對了！句子非常通順！"; 
+                    msg.className = "mt-3 text-center font-bold text-emerald-600 pop"; msg.style.opacity = '1';
+                    document.getElementById('unscramble-reset-btn').style.display = 'none';
+                    document.getElementById('unscramble-submit-btn').style.display = 'none';
+                }
             } else if (anyWrong) {
-                window.playSound('wrong');
-                window.unscrambleAttempts++;
-                
-                // SEN 友善鷹架提示：如果錯2次以上，給出明確提示
+                window.playSound('wrong'); window.unscrambleAttempts++;
                 let hintText = "Oops! 紅色的方塊放錯位置了，再試試看！";
                 if(window.unscrambleAttempts >= 2) {
                     for(let i=0; i<targetWords.length; i++) {
@@ -1330,18 +1497,9 @@
                         }
                     }
                 }
-                
-                msg.innerHTML = hintText;
-                msg.className = "mt-3 text-center font-bold text-rose-500 shake"; 
-                msg.style.opacity = '1';
-
-                // 1.5 秒後自動退回錯的詞
+                msg.innerHTML = hintText; msg.className = "mt-3 text-center font-bold text-rose-500 shake"; msg.style.opacity = '1';
                 setTimeout(() => {
-                    for(let i=0; i<targetWords.length; i++) {
-                        if(!window.validatedSlots[i]) {
-                            window.unscrambleSlots[i] = null;
-                        }
-                    }
+                    for(let i=0; i<targetWords.length; i++) { if(!window.validatedSlots[i]) window.unscrambleSlots[i] = null; }
                     window.renderUnscramble();
                 }, 1500);
             }
@@ -1353,6 +1511,15 @@
         window.openSubmitModal = function() {
             window.playSound('pop');
             document.getElementById('modal-score-display').textContent = window.globalScore;
+            
+            const classInput = document.getElementById('student-class');
+            const numInput = document.getElementById('student-num');
+            const nameInput = document.getElementById('student-name');
+            
+            if (classInput.value === 'undefined') classInput.value = '';
+            if (numInput.value === 'undefined') numInput.value = '';
+            if (nameInput.value === 'undefined') nameInput.value = '';
+
             document.getElementById('submit-modal').classList.remove('hidden');
         };
 
@@ -1377,12 +1544,10 @@
             btn.disabled = true;
             window.playSound('pop');
 
-            // ⚠️ 請確保這裡貼上的是結尾為 /exec 的網址 ⚠️
             const GAS_URL = "https://script.google.com/macros/s/AKfycbzMSrG9ZwzDDlKnVS-iYz3L39-q66Zh1Lqy0TVYp-GN3q-GBUsHb883QYI1lNcBqc-p/exec"; 
             
-            // 收集資料
             const payload = {
-                timestamp: new Date().toLocaleString('zh-TW', {timeZone: 'Asia/Hong_Kong'}),
+                timestamp: new Date().toLocaleString('zh-HK', {timeZone: 'Asia/Hong_Kong'}),
                 assignment: "中二單元八 說勤 字詞",
                 class: sClass,
                 number: sNum,
@@ -1391,13 +1556,10 @@
                 maxScore: window.maxScore
             };
 
-            // 實際 POST 到 Google Sheets
             fetch(GAS_URL, {
                 method: 'POST',
-                mode: 'no-cors', // 允許跨網域請求
-                headers: { 
-                    'Content-Type': 'text/plain;charset=utf-8' 
-                },
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify(payload)
             }).then(() => {
                 window.playSound('correct');
