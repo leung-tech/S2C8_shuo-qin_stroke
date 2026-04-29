@@ -152,7 +152,7 @@
                     </div>
                     <div class="mt-6 flex gap-3 w-full">
                         <button onclick="window.playAnimation()" class="flex-1 py-3 bg-slate-700 hover:bg-slate-800 text-white rounded-lg font-bold text-lg transition-colors">▶️ 觀察筆順</button>
-                        <button onclick="window.startQuiz()" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-lg transition-colors">✍️ 測驗 (+2⭐)</button>
+                        <button onclick="window.startQuiz()" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-lg transition-colors flex justify-center items-center gap-2">✍️ 測驗 <span class="bg-amber-300 text-amber-900 px-2 py-0.5 rounded text-sm shadow-sm">⭐ +2</span></button>
                     </div>
                 </div>
 
@@ -161,9 +161,12 @@
                     
                     <!-- 部首解碼 -->
                     <div class="flex flex-col gap-4">
-                        <h2 class="text-xl font-bold text-indigo-900 flex items-center gap-2">
-                            <span class="bg-indigo-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm">1</span> 找部首解密碼
-                        </h2>
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-bold text-indigo-900 flex items-center gap-2">
+                                <span class="bg-indigo-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm">1</span> 找部首解密碼
+                            </h2>
+                            <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm">⭐ +2</span>
+                        </div>
                         <div id="radical-options" class="flex gap-3 flex-wrap mb-2"></div>
                         
                         <!-- 拆字顯示區 -->
@@ -268,7 +271,10 @@
                         <!-- 挑戰 A: 近義詞 -->
                         <div class="flex-1 bg-white rounded-2xl p-5 border border-slate-200 flex flex-col relative">
                             <div class="flex justify-between items-center mb-4">
-                                <span class="bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-md text-sm">🤝 找好朋友 (近義詞)</span>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-md text-sm">🤝 找好朋友 (近義詞)</span>
+                                    <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm">⭐ +3</span>
+                                </div>
                                 <button onclick="window.speakText(document.getElementById('synonym-q').textContent, event)" class="tts-btn w-8 h-8 rounded-full bg-slate-100 text-slate-600">🗣️</button>
                             </div>
                             <h3 class="text-xl font-bold text-slate-800 mb-5" id="synonym-q"></h3>
@@ -279,7 +285,10 @@
                         <!-- 挑戰 B: 情境選擇 (三選一) -->
                         <div class="flex-1 bg-white rounded-2xl p-5 border border-slate-200 flex flex-col relative">
                             <div class="flex justify-between items-center mb-4">
-                                <span class="bg-teal-100 text-teal-800 font-bold px-3 py-1 rounded-md text-sm flex items-center gap-1"><span class="text-lg">📝</span> 觀察與應用 (情境選擇)</span>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="bg-teal-100 text-teal-800 font-bold px-3 py-1 rounded-md text-sm flex items-center gap-1"><span class="text-lg">📝</span> 觀察與應用 (情境選擇)</span>
+                                    <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm">⭐ +3</span>
+                                </div>
                                 <button onclick="window.speakText(document.getElementById('context-q').textContent, event)" class="tts-btn w-8 h-8 rounded-full bg-slate-100 text-slate-600">🗣️</button>
                             </div>
                             <h3 class="text-xl font-bold text-slate-800 mb-4" id="context-q"></h3>
@@ -293,7 +302,10 @@
                 <div class="flex flex-col lg:flex-row gap-6 w-full">
                     <!-- 用詞造句 -->
                     <div class="flex-1 bg-white border border-slate-200 rounded-3xl p-6 lg:p-8 shadow-md flex flex-col">
-                        <h2 class="text-xl font-bold text-slate-800 mb-4 border-b border-slate-100 pb-2">✍️ 實戰造句填空</h2>
+                        <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
+                            <h2 class="text-xl font-bold text-slate-800">✍️ 實戰造句填空</h2>
+                            <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm">⭐ +5</span>
+                        </div>
                         <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 text-xl font-medium text-slate-700 leading-relaxed mb-6" id="fill-in-sentence-display"></div>
                         <div class="flex flex-wrap gap-3 justify-center mt-auto" id="fill-in-options"></div>
                         <div id="fill-in-msg" class="mt-4 text-center font-bold opacity-0 transition-opacity"></div>
@@ -302,7 +314,10 @@
                     <!-- 句子重組 (方格拖拉互動版) -->
                     <div class="flex-1 bg-white border border-slate-200 rounded-3xl p-6 lg:p-8 shadow-md flex flex-col relative">
                         <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
-                            <h2 class="text-xl font-bold text-slate-800">🧩 邏輯句子重組</h2>
+                            <div class="flex items-center gap-3">
+                                <h2 class="text-xl font-bold text-slate-800">🧩 邏輯句子重組</h2>
+                                <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm">⭐ +5</span>
+                            </div>
                             <button onclick="window.speakText(window.currentWordData.sentenceUnscramble.join(''), event)" class="tts-btn w-8 h-8 rounded-full bg-slate-100 text-slate-600">🗣️</button>
                         </div>
                         
