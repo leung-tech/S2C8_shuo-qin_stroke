@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>語文探索基地 - 中二單元八 說勤 字詞</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
@@ -11,6 +11,7 @@
             font-family: 'PingFang TC', 'Heiti TC', 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
             background-color: #f8fafc; 
             transition: background-color 0.5s;
+            -webkit-tap-highlight-color: transparent;
         }
         .kaishu { font-family: 'KaiTi', 'BiauKai', 'DFKai-SB', 'STKaiti', serif; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -46,8 +47,9 @@
         /* 拆字顯示區 */
         .component-block { background-color: #e0e7ff; color: #312e81; font-family: 'KaiTi', serif; font-weight: bold; border-radius: 8px; padding: 0.5rem 1.2rem; box-shadow: 0 3px 5px rgba(0,0,0,0.05), inset 0 -2px 0 rgba(67, 56, 202, 0.1); }
 
-        /* 重組句子區塊樣式 (Drag & Drop) */
-        .word-block { cursor: grab; user-select: none; transition: all 0.2s; }
+        /* 重組句子區塊樣式 */
+        .word-block { cursor: pointer; user-select: none; transition: all 0.2s; touch-action: manipulation; }
+        @media (hover: hover) { .word-block:hover { transform: translateY(-2px); } }
         .word-block:active { cursor: grabbing; transform: scale(0.95); }
         .slot-box.drag-over { background-color: #e0e7ff; border-color: #6366f1; }
         
@@ -64,7 +66,7 @@
             <h1 class="text-base lg:text-2xl font-bold tracking-wider flex items-center gap-2">
                 <span>🚀 語文探索基地</span>
                 <span class="hidden lg:inline text-indigo-300">|</span>
-                <span class="text-sm lg:text-xl text-indigo-100">中二單元八 說勤 字詞</span>
+                <span class="text-sm lg:text-xl text-indigo-100">中二單元八 說勤</span>
             </h1>
             <div class="flex gap-4 items-center">
                 <button onclick="window.openSubmitModal()" class="hidden md:flex bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1.5 rounded-lg font-bold shadow-sm transition-colors items-center gap-2 text-sm lg:text-base">
@@ -74,7 +76,7 @@
             </div>
         </div>
         
-        <!-- 難度篩選器 (改用星星) -->
+        <!-- 難度篩選器 -->
         <div class="flex gap-2 lg:gap-4 p-2 bg-slate-100 text-sm font-bold border-b border-slate-200 justify-center overflow-x-auto whitespace-nowrap">
             <button onclick="window.filterDifficulty('all', this)" class="diff-btn px-6 py-2 rounded-lg text-indigo-900 bg-indigo-200 shadow-sm border border-indigo-300 transition-all">全部</button>
             <button onclick="window.filterDifficulty(1, this)" class="diff-btn px-6 py-2 rounded-lg text-slate-500 hover:bg-slate-200 border border-transparent transition-all">⭐</button>
@@ -93,9 +95,9 @@
         
         <!-- 頂部：星星分數與遞交按鈕 -->
         <div class="w-full max-w-6xl flex justify-between items-center mb-6 mx-auto">
-            <div class="bg-amber-100 border-2 border-amber-300 rounded-xl px-5 py-2 shadow-sm flex items-center gap-3">
-                <span class="text-2xl">⭐</span>
-                <span class="font-bold text-amber-800 text-lg">學習點數：<span id="score-display" class="text-2xl ml-1 font-black text-amber-600">0</span> <span class="text-amber-700/70 text-base">/ <span id="max-score-display">0</span></span></span>
+            <div class="bg-amber-100 border-2 border-amber-300 rounded-xl px-4 py-2 shadow-sm flex items-center gap-2 md:gap-3">
+                <span class="text-xl md:text-2xl">⭐</span>
+                <span class="font-bold text-amber-800 text-base md:text-lg whitespace-nowrap">學習點數：<span id="score-display" class="text-xl md:text-2xl ml-1 font-black text-amber-600">0</span> <span class="text-amber-700/70 text-sm md:text-base">/ <span id="max-score-display">0</span></span></span>
             </div>
             
             <div class="flex gap-4 items-center">
@@ -111,26 +113,26 @@
 
         <!-- 階段一：情境引入 -->
         <div id="intro-section" class="w-full max-w-4xl mx-auto mt-4 flex flex-col items-center justify-center fade-in-up">
-            <div class="bg-white border-2 border-slate-200 rounded-3xl p-8 md:p-12 shadow-xl w-full flex flex-col items-center text-center relative">
-                <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-indigo-600 text-white px-6 py-2 rounded-b-xl rounded-t-none font-bold tracking-widest shadow-md">情境解密</span>
-                <div id="intro-visual" class="text-7xl md:text-8xl my-6 flex gap-2 justify-center whitespace-nowrap"></div>
-                <div class="bg-slate-50 px-8 py-6 rounded-2xl mb-6 w-full border border-slate-200 flex items-center justify-center" id="intro-context"></div>
-                <div id="intro-question" class="text-xl font-bold text-indigo-800 mb-8 w-full max-w-2xl mx-auto bg-indigo-50 px-6 py-4 rounded-xl border border-indigo-100"></div>
-                <button onclick="window.revealWord()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xl font-bold py-4 px-12 rounded-xl shadow-lg transition-transform active:scale-95 flex items-center gap-3">
+            <div class="bg-white border-2 border-slate-200 rounded-3xl p-6 md:p-12 shadow-xl w-full flex flex-col items-center text-center relative">
+                <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-indigo-600 text-white px-6 py-2 rounded-b-xl rounded-t-none font-bold tracking-widest shadow-md whitespace-nowrap">情境解密</span>
+                <div id="intro-visual" class="text-7xl md:text-8xl my-6 flex gap-2 justify-center flex-wrap"></div>
+                <div class="bg-slate-50 px-6 md:px-8 py-6 rounded-2xl mb-6 w-full border border-slate-200 flex items-center justify-center" id="intro-context"></div>
+                <div id="intro-question" class="text-lg md:text-xl font-bold text-indigo-800 mb-8 w-full max-w-2xl mx-auto bg-indigo-50 px-6 py-4 rounded-xl border border-indigo-100"></div>
+                <button onclick="window.revealWord()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-lg md:text-xl font-bold py-4 px-8 md:px-12 rounded-xl shadow-lg transition-transform active:scale-95 flex items-center gap-3">
                     🔍 揭曉答案並進入分析
                 </button>
             </div>
         </div>
 
         <!-- 階段二：正式學習區 -->
-        <div id="learning-section" class="w-full flex flex-col items-center hidden fade-in-up max-w-6xl mx-auto gap-12">
+        <div id="learning-section" class="w-full flex flex-col items-center hidden fade-in-up max-w-6xl mx-auto gap-8 md:gap-12">
             
             <!-- 【字】 文字 -->
             <div class="w-full flex flex-col items-center relative mt-6">
                 <div class="absolute -top-5 flex justify-center w-full z-10">
-                    <span class="badge-element badge-yin text-base">🔡 【字】結構觀察</span>
+                    <span class="badge-element badge-yin text-base shadow-sm">🔡 【字】結構觀察</span>
                 </div>
-                <div id="word-display" class="flex justify-center flex-wrap gap-4 md:gap-8 bg-white p-8 rounded-3xl border-2 border-slate-200 shadow-sm pt-12 w-full">
+                <div id="word-display" class="flex justify-center flex-wrap gap-4 md:gap-8 bg-white p-6 md:p-8 rounded-3xl border-2 border-slate-200 shadow-sm pt-12 w-full">
                     <!-- JS 生成 -->
                 </div>
             </div>
@@ -138,21 +140,21 @@
             <!-- 【形】 筆順與防錯 -->
             <div class="bg-white rounded-3xl shadow-md p-6 lg:p-10 flex flex-col xl:flex-row gap-8 w-full border-2 border-indigo-100 relative mt-4">
                 <div class="absolute -top-5 flex justify-center w-full z-10 left-0">
-                    <span class="badge-element badge-xing text-base">✍️ 【形】拆字與防錯</span>
+                    <span class="badge-element badge-xing text-base shadow-sm">✍️ 【形】拆字與防錯</span>
                 </div>
 
                 <!-- 左側：筆順 -->
                 <div class="flex flex-col items-center w-full xl:w-[350px] pt-6">
-                    <div class="relative w-[280px] h-[280px] bg-slate-50 border-2 border-slate-300 rounded-xl overflow-hidden" id="canvas-container">
+                    <div class="relative w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] bg-slate-50 border-2 border-slate-300 rounded-xl overflow-hidden" id="canvas-container">
                         <div class="absolute inset-0 pointer-events-none opacity-40">
                             <div class="w-full h-full border-b-2 border-dashed border-slate-400 absolute top-1/2 -translate-y-1/2"></div>
                             <div class="w-full h-full border-r-2 border-dashed border-slate-400 absolute left-1/2 -translate-x-1/2"></div>
                         </div>
                         <div id="character-canvas" class="absolute inset-0 z-10 cursor-pointer" style="touch-action: none;"></div>
                     </div>
-                    <div class="mt-6 flex gap-3 w-full">
-                        <button onclick="window.playAnimation()" class="flex-1 py-3 bg-slate-700 hover:bg-slate-800 text-white rounded-lg font-bold text-lg transition-colors">▶️ 觀察筆順</button>
-                        <button onclick="window.startQuiz()" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-lg transition-colors flex justify-center items-center gap-2">✍️ 測驗 <span class="bg-amber-300 text-amber-900 px-2 py-0.5 rounded text-sm shadow-sm">⭐ +2</span></button>
+                    <div class="mt-6 flex flex-col sm:flex-row gap-3 w-full max-w-[280px] sm:max-w-full">
+                        <button onclick="window.playAnimation()" class="flex-1 py-3 bg-slate-700 hover:bg-slate-800 text-white rounded-lg font-bold text-base md:text-lg transition-colors">▶️ 觀察筆順</button>
+                        <button onclick="window.startQuiz()" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold text-base md:text-lg transition-colors flex justify-center items-center gap-2">✍️ 測驗 <span class="bg-amber-300 text-amber-900 px-2 py-0.5 rounded text-sm shadow-sm whitespace-nowrap">⭐ +2</span></button>
                     </div>
                 </div>
 
@@ -161,8 +163,8 @@
                     
                     <!-- 部首解碼 -->
                     <div class="flex flex-col gap-4">
-                        <div class="flex items-center justify-between">
-                            <h2 class="text-xl font-bold text-indigo-900 flex items-center gap-2">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h2 class="text-lg md:text-xl font-bold text-indigo-900 flex items-center gap-2">
                                 <span class="bg-indigo-500 text-white w-6 h-6 rounded flex items-center justify-center text-sm">1</span> 找部首解密碼
                             </h2>
                             <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm">⭐ +2</span>
@@ -171,11 +173,11 @@
                         
                         <!-- 拆字顯示區 -->
                         <div class="w-full transition-all duration-300 opacity-0 hidden" id="components-section">
-                            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+                            <div class="bg-white rounded-2xl p-4 md:p-5 border border-slate-200 shadow-sm">
                                 <div id="info-components" class="flex items-center gap-3 mb-4 pb-4 border-b border-slate-100 flex-wrap">
                                     <!-- 這裡會插入組件 -->
                                 </div>
-                                <div id="char-hint-box" class="text-slate-600 font-medium text-base flex gap-2">
+                                <div id="char-hint-box" class="text-slate-600 font-medium text-sm md:text-base flex gap-2">
                                     <span>💡</span><span id="char-hint-text"></span>
                                 </div>
                             </div>
@@ -183,19 +185,18 @@
                     </div>
 
                     <!-- 雙胞胎字找不同 -->
-                    <div class="bg-[#fff6f5] rounded-3xl p-6 border border-rose-100 flex flex-col gap-4 hidden shadow-sm" id="twins-section">
-                        <div class="flex items-center gap-3">
-                            <span class="text-2xl">👯</span>
-                            <h2 class="text-xl font-black text-rose-900">雙胞胎字找不同</h2>
-                            <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm ml-auto">⭐ +3</span>
+                    <div class="bg-[#fff6f5] rounded-3xl p-5 md:p-6 border border-rose-100 flex flex-col gap-4 hidden shadow-sm" id="twins-section">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h2 class="text-lg md:text-xl font-black text-rose-900 flex items-center gap-2"><span>👯</span> 雙胞胎字找不同</h2>
+                            <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm">⭐ +3</span>
                         </div>
-                        <p class="text-center font-bold text-rose-800/80 text-lg mb-2">哪一個才是正確的字？</p>
+                        <p class="text-center font-bold text-rose-800/80 text-base md:text-lg mb-2">哪一個才是正確的字？</p>
                         
-                        <div class="flex justify-center gap-8" id="twin-buttons-container">
+                        <div class="flex justify-center gap-6 md:gap-8" id="twin-buttons-container">
                             <!-- JS 生成互動按鈕 -->
                         </div>
                         
-                        <div id="twin-explanation" class="hidden mt-4 bg-white rounded-2xl border border-rose-200 p-4 text-rose-900 font-bold text-base flex items-center gap-3 shadow-sm mx-auto max-w-md">
+                        <div id="twin-explanation" class="hidden mt-4 bg-white rounded-2xl border border-rose-200 p-4 text-rose-900 font-bold text-sm md:text-base flex items-start md:items-center gap-3 shadow-sm mx-auto w-full max-w-md">
                             <!-- 答對後顯示解釋 -->
                         </div>
                     </div>
@@ -205,57 +206,57 @@
             <!-- 【義】 綜合區 -->
             <div class="w-full flex flex-col gap-8 relative mt-4">
                 <div class="absolute -top-5 flex justify-center w-full z-10">
-                    <span class="badge-element badge-yi text-base">📖 【義】應用與實戰</span>
+                    <span class="badge-element badge-yi text-base shadow-sm">📖 【義】應用與實戰</span>
                 </div>
                 
                 <!-- 1. 詞語小辭典 & 秘笈 -->
-                <div class="bg-white border-2 border-teal-100 rounded-3xl shadow-md w-full pt-10 pb-6 px-6 lg:px-8 flex flex-col xl:flex-row gap-8">
+                <div class="bg-white border-2 border-teal-100 rounded-3xl shadow-md w-full pt-10 pb-6 px-5 lg:px-8 flex flex-col xl:flex-row gap-8">
                     
                     <!-- 辭典解釋 -->
                     <div class="flex-1 flex flex-col gap-4">
                         <div class="flex items-center gap-2 border-b-2 border-teal-100 pb-2 flex-wrap">
-                            <h2 class="text-2xl font-bold text-teal-900">📚 詞語小辭典</h2>
-                            <span id="word-english" class="bg-slate-100 text-slate-600 px-3 py-1 rounded-md text-sm font-bold ml-2 font-mono tracking-wider shadow-sm"></span>
+                            <h2 class="text-xl md:text-2xl font-bold text-teal-900">📚 詞語小辭典</h2>
+                            <span id="word-english" class="bg-slate-100 text-slate-600 px-2 py-1 rounded-md text-xs md:text-sm font-bold ml-2 font-mono tracking-wider shadow-sm"></span>
                         </div>
-                        <div id="word-explanation" class="text-xl text-slate-700 leading-relaxed font-medium mt-2"></div>
+                        <div id="word-explanation" class="text-lg md:text-xl text-slate-700 leading-relaxed font-medium mt-2"></div>
                         
                         <!-- ⚡ 思考挑戰 -->
                         <div class="mt-auto bg-amber-50 border border-amber-200 p-4 rounded-xl flex flex-col gap-2 shadow-inner">
                             <span class="text-amber-700 font-bold flex items-center gap-2"><span>⚡</span> 腦力激盪 (進階思考)</span>
-                            <span id="think-challenge" class="text-amber-900 font-medium text-lg"></span>
+                            <span id="think-challenge" class="text-amber-900 font-medium text-base md:text-lg"></span>
                         </div>
                     </div>
 
                     <!-- 詞語學習秘笈 -->
-                    <div class="flex-1 bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col gap-5">
+                    <div class="flex-1 bg-slate-50 border border-slate-200 rounded-2xl p-5 md:p-6 flex flex-col gap-5">
                         <div class="flex items-center justify-between">
-                            <h2 class="text-xl font-black text-slate-800 flex items-center gap-2"><span>🔮</span> 詞語學習秘笈</h2>
+                            <h2 class="text-lg md:text-xl font-black text-slate-800 flex items-center gap-2"><span>🔮</span> 詞語學習秘笈</h2>
                             <button onclick="window.playSecretGuideTTS(event)" class="tts-btn w-8 h-8 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center">🗣️</button>
                         </div>
 
                         <!-- 秘笈 1: 積木拼 -->
                         <div>
-                            <h3 class="text-base font-bold text-indigo-700 mb-2 flex items-center gap-2"><span>🧩</span> 把字當積木拼</h3>
-                            <div class="bg-white p-3 rounded-lg border border-slate-200 flex items-center gap-2 text-xl font-bold flex-wrap" id="block-combine-display"></div>
+                            <h3 class="text-sm md:text-base font-bold text-indigo-700 mb-2 flex items-center gap-2"><span>🧩</span> 把字當積木拼</h3>
+                            <div class="bg-white p-3 rounded-lg border border-slate-200 flex items-center gap-2 text-lg md:text-xl font-bold flex-wrap" id="block-combine-display"></div>
                         </div>
 
                         <!-- 秘笈 2: 百搭公式 -->
                         <div>
-                            <h3 class="text-base font-bold text-emerald-700 mb-2 flex items-center gap-2"><span>🧮</span> 百搭公式 (不會用錯)</h3>
+                            <h3 class="text-sm md:text-base font-bold text-emerald-700 mb-2 flex items-center gap-2"><span>🧮</span> 百搭公式 (不會用錯)</h3>
                             <div class="bg-emerald-50 p-3 rounded-lg border border-emerald-100 flex flex-col gap-2">
-                                <div class="text-lg font-bold text-emerald-900 tracking-wide" id="formula-pattern"></div>
-                                <div class="text-sm text-emerald-800 bg-white py-1 px-2 rounded font-medium" id="formula-example"></div>
+                                <div class="text-base md:text-lg font-bold text-emerald-900 tracking-wide" id="formula-pattern"></div>
+                                <div class="text-xs md:text-sm text-emerald-800 bg-white py-1 px-2 rounded font-medium" id="formula-example"></div>
                             </div>
                         </div>
 
                         <!-- 秘笈 3: 地雷區 -->
                         <div>
-                            <h3 class="text-base font-bold text-rose-700 mb-2 flex items-center gap-2"><span>💥</span> 地雷區 (防錯)</h3>
-                            <div class="bg-white p-4 rounded-lg border border-rose-100 flex flex-col gap-2">
-                                <div class="flex items-center gap-2 text-lg font-bold text-slate-400">
+                            <h3 class="text-sm md:text-base font-bold text-rose-700 mb-2 flex items-center gap-2"><span>💥</span> 地雷區 (防錯)</h3>
+                            <div class="bg-white p-3 md:p-4 rounded-lg border border-rose-100 flex flex-col gap-2">
+                                <div class="flex items-center gap-2 text-base md:text-lg font-bold text-slate-400">
                                     <span class="text-rose-500">❌</span><span id="minefield-wrong" class="strikethrough-red"></span>
                                 </div>
-                                <div class="bg-rose-50 p-2 rounded text-rose-800 font-medium text-sm">
+                                <div class="bg-rose-50 p-2 rounded text-rose-800 font-medium text-xs md:text-sm">
                                     ⚠️ <span id="minefield-reason"></span>
                                 </div>
                             </div>
@@ -264,36 +265,36 @@
                 </div>
 
                 <!-- 2. 語義小挑戰 -->
-                <div class="w-full bg-indigo-50 border border-indigo-100 rounded-3xl p-6 lg:p-8 shadow-md flex flex-col gap-6">
-                    <h2 class="text-2xl font-black text-indigo-900 flex items-center gap-2">🎯 語義小挑戰</h2>
+                <div class="w-full bg-indigo-50 border border-indigo-100 rounded-3xl p-5 lg:p-8 shadow-md flex flex-col gap-6">
+                    <h2 class="text-xl md:text-2xl font-black text-indigo-900 flex items-center gap-2">🎯 語義小挑戰</h2>
                     
                     <div class="flex flex-col xl:flex-row gap-6 w-full">
                         <!-- 挑戰 A: 近義詞 -->
                         <div class="flex-1 bg-white rounded-2xl p-5 border border-slate-200 flex flex-col relative">
-                            <div class="flex justify-between items-center mb-4">
+                            <div class="flex justify-between items-start md:items-center mb-4 gap-2">
                                 <div class="flex flex-wrap items-center gap-2">
-                                    <span class="bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-md text-sm">🤝 找好朋友 (近義詞)</span>
-                                    <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm">⭐ +3</span>
+                                    <span class="bg-indigo-100 text-indigo-800 font-bold px-3 py-1 rounded-md text-sm whitespace-nowrap">🤝 找好朋友 (近義詞)</span>
+                                    <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm whitespace-nowrap">⭐ +3</span>
                                 </div>
-                                <button onclick="window.speakText(document.getElementById('synonym-q').textContent, event)" class="tts-btn w-8 h-8 rounded-full bg-slate-100 text-slate-600">🗣️</button>
+                                <button onclick="window.speakText(document.getElementById('synonym-q').textContent, event)" class="tts-btn w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex-shrink-0">🗣️</button>
                             </div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-5" id="synonym-q"></h3>
+                            <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-5" id="synonym-q"></h3>
                             <div class="flex flex-wrap gap-3 mt-auto" id="synonym-options"></div>
-                            <div id="synonym-msg" class="mt-3 text-center font-bold text-base opacity-0 transition-opacity"></div>
+                            <div id="synonym-msg" class="mt-3 text-center font-bold text-sm md:text-base opacity-0 transition-opacity"></div>
                         </div>
 
                         <!-- 挑戰 B: 情境選擇 (三選一) -->
                         <div class="flex-1 bg-white rounded-2xl p-5 border border-slate-200 flex flex-col relative">
-                            <div class="flex justify-between items-center mb-4">
+                            <div class="flex justify-between items-start md:items-center mb-4 gap-2">
                                 <div class="flex flex-wrap items-center gap-2">
-                                    <span class="bg-teal-100 text-teal-800 font-bold px-3 py-1 rounded-md text-sm flex items-center gap-1"><span class="text-lg">📝</span> 觀察與應用 (情境選擇)</span>
-                                    <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm">⭐ +3</span>
+                                    <span class="bg-teal-100 text-teal-800 font-bold px-3 py-1 rounded-md text-sm flex items-center gap-1 whitespace-nowrap"><span class="text-base">📝</span> 觀察與應用</span>
+                                    <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm whitespace-nowrap">⭐ +3</span>
                                 </div>
-                                <button onclick="window.speakText(document.getElementById('context-q').textContent, event)" class="tts-btn w-8 h-8 rounded-full bg-slate-100 text-slate-600">🗣️</button>
+                                <button onclick="window.speakText(document.getElementById('context-q').textContent, event)" class="tts-btn w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex-shrink-0">🗣️</button>
                             </div>
-                            <h3 class="text-xl font-bold text-slate-800 mb-4" id="context-q"></h3>
+                            <h3 class="text-lg md:text-xl font-bold text-slate-800 mb-4" id="context-q"></h3>
                             <div class="flex flex-col gap-2 mt-auto" id="context-options"></div>
-                            <div id="context-msg" class="mt-3 text-center font-bold text-base opacity-0 transition-opacity"></div>
+                            <div id="context-msg" class="mt-3 text-center font-bold text-sm md:text-base opacity-0 transition-opacity"></div>
                         </div>
                     </div>
                 </div>
@@ -301,24 +302,24 @@
                 <!-- 3. 造句與重組 -->
                 <div class="flex flex-col lg:flex-row gap-6 w-full">
                     <!-- 用詞造句 -->
-                    <div class="flex-1 bg-white border border-slate-200 rounded-3xl p-6 lg:p-8 shadow-md flex flex-col">
-                        <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
-                            <h2 class="text-xl font-bold text-slate-800">✍️ 實戰造句填空</h2>
+                    <div class="flex-1 bg-white border border-slate-200 rounded-3xl p-5 lg:p-8 shadow-md flex flex-col">
+                        <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2 flex-wrap gap-2">
+                            <h2 class="text-lg md:text-xl font-bold text-slate-800">✍️ 實戰造句填空</h2>
                             <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm">⭐ +5</span>
                         </div>
-                        <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 text-xl font-medium text-slate-700 leading-relaxed mb-6" id="fill-in-sentence-display"></div>
+                        <div class="bg-slate-50 p-4 md:p-5 rounded-xl border border-slate-200 text-lg md:text-xl font-medium text-slate-700 leading-relaxed mb-6" id="fill-in-sentence-display"></div>
                         <div class="flex flex-wrap gap-3 justify-center mt-auto" id="fill-in-options"></div>
-                        <div id="fill-in-msg" class="mt-4 text-center font-bold opacity-0 transition-opacity"></div>
+                        <div id="fill-in-msg" class="mt-4 text-center font-bold text-sm md:text-base opacity-0 transition-opacity"></div>
                     </div>
 
                     <!-- 句子重組 (方格拖拉互動版) -->
-                    <div class="flex-1 bg-white border border-slate-200 rounded-3xl p-6 lg:p-8 shadow-md flex flex-col relative">
-                        <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2">
+                    <div class="flex-1 bg-white border border-slate-200 rounded-3xl p-5 lg:p-8 shadow-md flex flex-col relative">
+                        <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2 flex-wrap gap-2">
                             <div class="flex items-center gap-3">
-                                <h2 class="text-xl font-bold text-slate-800">🧩 邏輯句子重組</h2>
+                                <h2 class="text-lg md:text-xl font-bold text-slate-800">🧩 邏輯句子重組</h2>
                                 <span class="bg-amber-300 text-amber-900 px-3 py-1 rounded-full font-bold text-sm shadow-sm">⭐ +5</span>
                             </div>
-                            <button onclick="window.speakText(window.currentWordData.sentenceUnscramble.join(''), event)" class="tts-btn w-8 h-8 rounded-full bg-slate-100 text-slate-600">🗣️</button>
+                            <button onclick="window.speakText(window.currentWordData.sentenceUnscramble.join(''), event)" class="tts-btn w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex-shrink-0">🗣️</button>
                         </div>
                         
                         <!-- 放字用的方格區 -->
@@ -326,14 +327,16 @@
                             <!-- JS 生成的方格 -->
                         </div>
 
+                        <div class="text-center text-slate-400 text-xs font-bold mb-2">💡 電腦可拖拉，手機/平板請直接「點擊」下方詞語放入空格</div>
+
                         <!-- 下方的詞語庫 -->
                         <div id="word-pool" class="flex flex-wrap gap-2 justify-center mb-5 min-h-[50px]"></div>
                         
                         <div class="mt-auto flex justify-center gap-3">
-                            <button onclick="window.resetUnscramble()" class="px-5 py-2 bg-slate-200 text-slate-700 hover:bg-slate-300 rounded-lg font-bold text-sm transition-colors">重新排列</button>
-                            <button onclick="window.checkUnscramble()" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-base shadow-sm transition-colors">提交答案</button>
+                            <button onclick="window.resetUnscramble()" class="px-4 py-2 bg-slate-200 text-slate-700 hover:bg-slate-300 rounded-lg font-bold text-sm transition-colors">重新排列</button>
+                            <button onclick="window.checkUnscramble()" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-sm md:text-base shadow-sm transition-colors">提交答案</button>
                         </div>
-                        <div id="unscramble-msg" class="mt-3 text-center font-bold opacity-0 transition-opacity h-6"></div>
+                        <div id="unscramble-msg" class="mt-3 text-center font-bold text-sm md:text-base opacity-0 transition-opacity min-h-[24px]"></div>
                     </div>
                 </div>
 
@@ -439,7 +442,7 @@
         };
 
         // ==========================================
-        // 16組 完整字庫 (加入標點符號重組、修正「與」字結構)
+        // 16組 完整字庫
         // ==========================================
         window.wordDatabase = [
             {
