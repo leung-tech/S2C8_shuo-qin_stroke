@@ -66,7 +66,7 @@
             <h1 class="text-base lg:text-2xl font-bold tracking-wider flex items-center gap-2">
                 <span>🚀 語文探索基地</span>
                 <span class="hidden lg:inline text-indigo-300">|</span>
-                <span class="text-sm lg:text-xl text-indigo-100">中二單元八 說勤 字詞</span>
+                <span class="text-sm lg:text-xl text-indigo-100">中二單元八 說勤</span>
             </h1>
             <div class="flex gap-4 items-center">
                 <button onclick="window.openSubmitModal()" class="hidden md:flex bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-1.5 rounded-lg font-bold shadow-sm transition-colors items-center gap-2 text-sm lg:text-base">
@@ -324,7 +324,7 @@
                         <div id="fill-in-msg" class="mt-4 text-center font-bold text-sm md:text-base opacity-0 transition-opacity"></div>
                     </div>
 
-                    <!-- 句子重組 (方格拖拉互動版) -->
+                    <!-- 句子重組 -->
                     <div class="flex-1 bg-white border border-slate-200 rounded-3xl p-5 lg:p-8 shadow-md flex flex-col relative">
                         <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-2 flex-wrap gap-2">
                             <div class="flex items-center gap-3">
@@ -509,51 +509,53 @@
                     context: { options: [{text: "發表了世界頂級的科學論文", emoji: "📄🏆"}, {text: "每天在家裡睡覺打電動", emoji: "🛌🎮"}, {text: "剛學會騎腳踏車而已", emoji: "🚲😅"}], correctIndex: 0 }
                 },
                 sentenceUnscramble: ["他", "在", "醫學", "領域", "有著", "精深造詣"],
-                fillInGame: { sentence: "李教授在科學研究上取得了____，受人敬仰。", options: ["精深造詣", "遲鈍", "體會"], correct: "精深造詣" }
+                fillInGame: { sentence: "李教授在科學研究上取得了____，受人敬仰。", options: ["精深造詣", "遲鈍", "與日俱增"], correct: "精深造詣" }
             },
             {
-                word: "攀登", wordEnglish: "Climb", difficulty: 2, introVisual: "🧗‍♂️⛰️",
-                introContext: "探險家們正抓著繩索，一步一步往高山上爬。",
-                introQuestion: "請問他們在做什麼動作？",
-                wordExplanation: "抓住東西往上爬，多指爬山或克服困難。",
-                thinkChallenge: "如果你是一位探險家，你會最想攀登世界上哪一座山？為什麼？",
+                word: "無垠", wordEnglish: "Boundless", difficulty: 2, introVisual: "🌌🌊",
+                introContext: "站在海邊，看到的大海沒有盡頭。",
+                introQuestion: "形容廣闊沒有邊際，可以怎麼說？",
+                wordExplanation: "形容廣闊無邊、沒有界限。",
+                thinkChallenge: "你覺得宇宙是「無垠」的嗎？為什麼？",
                 chars: [
-                    { char: "攀", radical: "手", wrongRadicals: ["木", "大"], components: ["樊", "手"], hint: "用雙手(手)抓住樹枝或網子(樊)往上爬，就是「攀」。", twinGame: { correct: "攀", wrong: "舉", diff: "「攀」上面是樊，代表錯綜複雜的樹枝或網子。" } },
-                    { char: "登", radical: "癶", wrongRadicals: ["豆", "走"], components: ["癶", "豆"], hint: "兩隻腳(癶)用力踩踏，登上高高的祭器(豆)台。", twinGame: { correct: "登", wrong: "發", diff: "「登」下面是豆，不要寫成發的右邊喔！" } }
+                    { char: "無", radical: "火", wrongRadicals: ["一", "水"], components: ["𠂉", "卌", "灬"], hint: "什麼都沒有。", twinGame: { correct: "無", wrong: "舞", diff: "無下面是四點水(灬)，舞下面是舛！" } },
+                    { char: "垠", radical: "土", wrongRadicals: ["金", "艮"], components: ["土", "艮"], hint: "土地的邊界。", twinGame: { correct: "垠", wrong: "根", diff: "邊界和土地有關，所以是土字旁。" } }
                 ],
                 secret: {
-                    blocks: ["攀", "登"],
-                    formula: { pattern: "[ 準備 / 努力 / 成功 ] + [ 攀登 ]", example: "例：準備攀登、成功攀登玉山。" },
-                    minefield: { wrong: "他攀登了一顆蘋果。", reason: "點解錯：「攀登」通常用在爬高處，不能用來吃東西！" }
+                    blocks: ["無", "垠"],
+                    formula: { pattern: "[ 廣闊 / 浩瀚 ] + [ 無垠 ]", example: "例：這片廣闊無垠的草原真美麗。" },
+                    minefield: { wrong: "我住的房間廣闊無垠。", reason: "點解錯：「無垠」用來形容大自然極大、看不到盡頭的空間，房間太小了！" }
                 },
                 semanticGames: {
-                    synonym: { options: ["爬上", "跌倒", "下降"], correct: "爬上" },
-                    context: { options: [{text: "帶著裝備爬上陡峭的高山", emoji: "🧗‍♂️⛰️"}, {text: "坐電梯下樓去便利商店買東西", emoji: "🛗🏪"}, {text: "在平坦的操場上輕鬆散步", emoji: "🚶‍♂️🏞️"}], correctIndex: 0 }
+                    synonym: { options: ["一望無際", "井底之蛙", "狹小擁擠"], correct: "一望無際" },
+                    context: { options: [{text: "看著沒有邊際的大海", emoji: "🌊👀"}, {text: "待在狹窄的電梯裡", emoji: "🛗😐"}, {text: "把書本放進抽屜裡", emoji: "📚🎒"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["我們", "決定", "明天", "一早", "去攀登", "高山"],
-                fillInGame: { sentence: "為了看日出，我們決定____這座陡峭的高山。", options: ["攀登", "珍惜", "奠定"], correct: "攀登" }
+                sentenceUnscramble: ["宇宙", "的", "空間", "是", "廣闊", "無垠", "的"],
+                fillInGame: { sentence: "望着廣闊____的星空，他感到人類十分渺小。", options: ["無垠", "渾濁", "氣餒"], correct: "無垠" }
             },
             {
-                word: "珍惜", wordEnglish: "Cherish", difficulty: 1, introVisual: "💖🕰️",
-                introContext: "小華把外婆送的手錶小心翼翼地收好，非常愛護它。",
-                introQuestion: "請問小華對手錶的態度是？",
-                wordExplanation: "重視、愛惜，不隨便浪費或破壞。",
-                thinkChallenge: "除了物品，還有什麼抽象的東西（例如時間、朋友）是你覺得應該要珍惜的？",
+                word: "通宵達旦", wordEnglish: "All night", difficulty: 3, introVisual: "🦉☕",
+                introContext: "為了準備明天的考試，哥哥整晚都沒睡覺直到天亮。",
+                introQuestion: "形容整夜一直到天亮，叫什麼？",
+                wordExplanation: "從入夜直到天亮。形容整夜都在做某事。",
+                thinkChallenge: "你有沒有曾經「通宵達旦」做過一件事？隔天感覺如何？",
                 chars: [
-                    { char: "珍", radical: "玉", wrongRadicals: ["人", "手"], components: ["王(玉)", "㐱"], hint: "像美玉一樣寶貴的物品，就是「珍」寶。", twinGame: { correct: "珍", wrong: "診", diff: "「珍」是玉字旁，代表寶物；「診」是看醫生。" } },
-                    { char: "惜", radical: "心", wrongRadicals: ["手", "日"], components: ["忄", "昔"], hint: "心(忄)裡對過去(昔)的事物感到不捨，就是惋「惜」。", twinGame: { correct: "惜", wrong: "借", diff: "珍惜是一種心理感受，所以是豎心旁(忄)。" } }
+                    { char: "通", radical: "辵", wrongRadicals: ["甬", "用"], components: ["辶", "甬"], hint: "走(辶)路順暢無阻，就是「通」行。", twinGame: { correct: "通", wrong: "痛", diff: "暢通是走出來的，左邊是辵(辶)部。" } },
+                    { char: "宵", radical: "宀", wrongRadicals: ["月", "肖"], components: ["宀", "肖"], hint: "屋內(宀)夜晚安靜的時間，就是元「宵」、宵夜。", twinGame: { correct: "宵", wrong: "消", diff: "宵是夜晚，上面是寶蓋頭(宀)。" } },
+                    { char: "達", radical: "辵", wrongRadicals: ["大", "土"], components: ["辶", "幸(變形)"], hint: "順利走(辶)到目的地，就是抵「達」。", twinGame: { correct: "達", wrong: "遠", diff: "達的右邊是一隻小羊的變形，不是袁喔。" } },
+                    { char: "旦", radical: "日", wrongRadicals: ["一", "口"], components: ["日", "一"], hint: "太陽(日)剛從地平線(一)升起，代表早晨。", twinGame: { correct: "旦", wrong: "且", diff: "旦是太陽升起，上面是日字。" } }
                 ],
                 secret: {
-                    blocks: ["珍", "惜"],
-                    formula: { pattern: "[ 懂得 / 必須 / 好好 ] + [ 珍惜 ]", example: "例：好好珍惜時間、懂得珍惜。" },
-                    minefield: { wrong: "我很珍惜地把錢丟進水溝。", reason: "點解錯：丟掉東西叫做「浪費」，「珍惜」是好好保護！" }
+                    blocks: ["通", "宵", "達", "旦"],
+                    formula: { pattern: "[ 熬夜 / 工作 ] + [ 通宵達旦 ]", example: "例：為了趕進度，他通宵達旦地工作。" },
+                    minefield: { wrong: "我昨天中午通宵達旦地吃了一頓飯。", reason: "點解錯：「通宵達旦」是指整個晚上到天亮，中午是不可能通宵的！" }
                 },
                 semanticGames: {
-                    synonym: { options: ["愛護", "破壞", "浪費"], correct: "愛護" },
-                    context: { options: [{text: "把舊玩具擦乾淨收好", emoji: "🧸✨"}, {text: "把還能用的鉛筆故意折斷", emoji: "✏️💥"}, {text: "任由水龍頭一直流水不關", emoji: "🚰💧"}], correctIndex: 0 }
+                    synonym: { options: ["徹夜不眠", "一閃而過", "半途而廢"], correct: "徹夜不眠" },
+                    context: { options: [{text: "為了報告整夜沒睡直到早上", emoji: "🦉💻"}, {text: "晚上九點就準時上床睡覺", emoji: "🛌💤"}, {text: "只花了一分鐘就把功課寫完", emoji: "⏱️📝"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["我們", "應該", "好好", "珍惜", "現在的", "幸福生活"],
-                fillInGame: { sentence: "水資源很寶貴，我們一定要好好____。", options: ["蒐集", "開拓", "珍惜"], correct: "珍惜" }
+                sentenceUnscramble: ["為了", "完成", "報告", "他", "通宵達旦", "地", "工作"],
+                fillInGame: { sentence: "醫生們____地搶救受傷的病人，非常辛苦。", options: ["通宵達旦", "概莫能外", "長年累月"], correct: "通宵達旦" }
             },
             {
                 word: "長年累月", wordEnglish: "Year in, year out", difficulty: 3, introVisual: "🗓️⏳",
@@ -577,7 +579,7 @@
                     context: { options: [{text: "每天練琴練了十年", emoji: "🎹📅"}, {text: "昨天才剛開始學腳踏車", emoji: "🚲😅"}, {text: "等了三分鐘泡麵煮好", emoji: "🍜⏱️"}], correctIndex: 0 }
                 },
                 sentenceUnscramble: ["經過", "長年累月", "的努力", "他終於", "成功了"],
-                fillInGame: { sentence: "鐘乳石是經過____的滴水才形成的自然奇觀。", options: ["遲鈍", "長年累月", "書籍"], correct: "長年累月" }
+                fillInGame: { sentence: "鐘乳石是經過____的滴水才形成的自然奇觀。", options: ["遲鈍", "長年累月", "蒐集"], correct: "長年累月" }
             },
             {
                 word: "實踐", wordEnglish: "Practice", difficulty: 2, introVisual: "🛠️🏃",
@@ -599,7 +601,7 @@
                     context: { options: [{text: "把環保方法用在生活裡", emoji: "♻️👍"}, {text: "只是嘴巴說說卻不去做", emoji: "🗣️🙅"}, {text: "把計畫表揉掉丟進垃圾桶", emoji: "🗑️📃"}], correctIndex: 0 }
                 },
                 sentenceUnscramble: ["我們要", "把", "學到的", "知識", "實踐", "出來"],
-                fillInGame: { sentence: "光說不練是沒有用的，我們必須親自去____。", options: ["實踐", "建樹", "關鍵"], correct: "實踐" }
+                fillInGame: { sentence: "光說不練是沒有用的，我們必須親自去____。", options: ["實踐", "建樹", "開拓"], correct: "實踐" }
             },
             {
                 word: "堅持不懈", wordEnglish: "Persevere", difficulty: 3, introVisual: "🏃‍♂️💦",
@@ -645,7 +647,7 @@
                     context: { options: [{text: "發明新藥救了很多人", emoji: "💊🦸‍♂️"}, {text: "每天在家裡無所事事", emoji: "🛋️🥱"}, {text: "在公園裡種了一棵蘋果樹", emoji: "🌳🍎"}], correctIndex: 0 }
                 },
                 sentenceUnscramble: ["他", "在", "醫學界", "有著", "很高的", "建樹"],
-                fillInGame: { sentence: "這位老校長在教育界有著卓越的____。", options: ["書籍", "建樹", "遲鈍"], correct: "建樹" }
+                fillInGame: { sentence: "這位老校長在教育界有著卓越的____。", options: ["奠定", "建樹", "遲鈍"], correct: "建樹" }
             },
             {
                 word: "與日俱增", wordEnglish: "Increase day by day", difficulty: 3, introVisual: "📈📆",
@@ -669,7 +671,7 @@
                     context: { options: [{text: "小狗一天吃得比一天多", emoji: "🐶📈"}, {text: "水壺裡的水一天比一天少", emoji: "💧📉"}, {text: "我的身高一直沒有改變", emoji: "🧍‍♂️📏"}], correctIndex: 0 }
                 },
                 sentenceUnscramble: ["大家", "對", "環保的", "重視", "與日俱增"],
-                fillInGame: { sentence: "隨著比賽日期接近，選手們的壓力____。", options: ["與日俱增", "長年累月", "堅持不懈"], correct: "與日俱增" }
+                fillInGame: { sentence: "隨著比賽日期接近，選手們的壓力____。", options: ["與日俱增", "氣餒", "渾濁"], correct: "與日俱增" }
             },
             {
                 word: "艱苦奮鬥", wordEnglish: "Work hard", difficulty: 3, introVisual: "😓💪",
@@ -693,7 +695,7 @@
                     context: { options: [{text: "在惡劣環境下努力工作", emoji: "🌧️💪"}, {text: "每天躺在沙發上看電視", emoji: "🛋️📺"}, {text: "中了大獎一夜致富", emoji: "💰🎉"}], correctIndex: 0 }
                 },
                 sentenceUnscramble: ["為了", "美好的未來", "我們必須", "艱苦奮鬥"],
-                fillInGame: { sentence: "前人經過____，才為我們創造了現在的繁榮。", options: ["艱苦奮鬥", "實踐", "珍惜"], correct: "艱苦奮鬥" }
+                fillInGame: { sentence: "前人經過____，才為我們創造了現在的繁榮。", options: ["艱苦奮鬥", "無垠", "實踐"], correct: "艱苦奮鬥" }
             },
             {
                 word: "遲鈍", wordEnglish: "Dull", difficulty: 2, introVisual: "🐢🥱",
@@ -715,51 +717,53 @@
                     context: { options: [{text: "叫他好幾聲過很久才回頭", emoji: "🐢❓"}, {text: "聽到音樂馬上跟著跳舞", emoji: "🐇💃"}, {text: "球飛過來瞬間接住", emoji: "⚾🙌"}], correctIndex: 0 }
                 },
                 sentenceUnscramble: ["他", "剛睡醒", "反應", "顯得", "有些", "遲鈍"],
-                fillInGame: { sentence: "這把剪刀太____了，根本剪不斷紙張。", options: ["精深造詣", "遲鈍", "關鍵"], correct: "遲鈍" }
+                fillInGame: { sentence: "這把剪刀太____了，根本剪不斷紙張。", options: ["精深造詣", "遲鈍", "建樹"], correct: "遲鈍" }
             },
             {
-                word: "書籍", wordEnglish: "Books", difficulty: 2, introVisual: "📚📗",
-                introContext: "圖書館的架子上擺滿了一本又一本的故事、百科全書。",
-                introQuestion: "請問這些統稱為什麼？",
-                wordExplanation: "裝訂成冊的著作物，用來閱讀和記錄知識。",
-                thinkChallenge: "如果你可以寫一本「書籍」，你會想寫什麼主題的故事？",
+                word: "概莫能外", wordEnglish: "No exception", difficulty: 3, introVisual: "🙅‍♂️🚫",
+                introContext: "學校規定每個人都要穿校服，不管是誰都不可以不穿。",
+                introQuestion: "形容全都在內，沒有例外的詞語是？",
+                wordExplanation: "全都在內，沒有例外。",
+                thinkChallenge: "有什麼自然法則（比如生老病死）是所有生物都「概莫能外」的？",
                 chars: [
-                    { char: "書", radical: "曰", wrongRadicals: ["聿", "土"], components: ["聿", "曰"], hint: "手拿著毛筆把想說的話寫下來，就成了一本「書」。", twinGame: { correct: "書", wrong: "畫", diff: "「書」下面是說話的曰，畫的下面是田。" } },
-                    { char: "籍", radical: "竹", wrongRadicals: ["耤", "木"], components: ["竹", "耤"], hint: "古代人把字寫在竹片上並記錄保存，就是書「籍」。", twinGame: { correct: "籍", wrong: "藉", diff: "古代書是竹子做的，所以是竹字頭(⺮)。" } }
+                    { char: "概", radical: "木", wrongRadicals: ["既", "白"], components: ["木", "既"], hint: "用木(木)平刮斗斛，引申為全部、大「概」。", twinGame: { correct: "概", wrong: "慨", diff: "概莫能外是指一般狀況，用木字旁，不是豎心旁(慨嘆)。" } },
+                    { char: "莫", radical: "艸", wrongRadicals: ["日", "大"], components: ["艹", "日", "大"], hint: "太陽(日)落在草(艹)叢中，引申為「不、沒有」。", twinGame: { correct: "莫", wrong: "墓", diff: "莫沒有土字底。" } },
+                    { char: "能", radical: "肉", wrongRadicals: ["匕", "月"], components: ["月(肉)", "匕"], hint: "像熊一樣有力量(肉)可以做到，就是「能」力。", twinGame: { correct: "能", wrong: "熊", diff: "能力不用加四點水(灬)。" } },
+                    { char: "外", radical: "夕", wrongRadicals: ["卜", "月"], components: ["夕", "卜"], hint: "晚(夕)上要在外面占卜(卜)吉凶。", twinGame: { correct: "外", wrong: "處", diff: "外的左邊是夕字。" } }
                 ],
                 secret: {
-                    blocks: ["書", "籍"],
-                    formula: { pattern: "[ 閱讀 / 購買 / 收藏 ] + [ 書籍 ]", example: "例：圖書館收藏了很多書籍。" },
-                    minefield: { wrong: "媽媽煮了一碗好吃的書籍。", reason: "點解錯：書籍是用來看的，絕對不能煮來吃！" }
+                    blocks: ["概", "莫", "能", "外"],
+                    formula: { pattern: "所有人 [ 概莫能外 ]", example: "例：學校的規矩每個學生都概莫能外。" },
+                    minefield: { wrong: "今天下雨，概莫能外。", reason: "點解錯：「概莫能外」是指所有對象都包含在內，不能單獨用來形容天氣。" }
                 },
                 semanticGames: {
-                    synonym: { options: ["書本", "電視", "食物"], correct: "書本" },
-                    context: { options: [{text: "圖書館裡一排又一排的故事", emoji: "📚🏫"}, {text: "電視裡正在播的卡通", emoji: "📺👀"}, {text: "手機裡的網路遊戲", emoji: "📱🎮"}], correctIndex: 0 }
+                    synonym: { options: ["毫無例外", "少之又少", "與眾不同"], correct: "毫無例外" },
+                    context: { options: [{text: "規定每個人都要遵守不准反抗", emoji: "🙅‍♂️📜"}, {text: "大家都可以隨便做自己的事", emoji: "🤷‍♂️🎮"}, {text: "老師只對一個人特別好", emoji: "👩‍🏫💖"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["圖書館", "收藏了", "各種各樣的", "珍貴", "書籍"],
-                fillInGame: { sentence: "閱讀優良的____，可以豐富我們的知識。", options: ["書籍", "體會", "攀登"], correct: "書籍" }
+                sentenceUnscramble: ["學校的", "規矩", "每個", "學生", "都", "概莫能外"],
+                fillInGame: { sentence: "法律面前人人平等，任何人都____。", options: ["概莫能外", "通宵達旦", "氣餒"], correct: "概莫能外" }
             },
             {
-                word: "關鍵", wordEnglish: "Key", difficulty: 2, introVisual: "🔑🚪",
-                introContext: "這道題非常難，只要找到最重要的一個提示就能解開。",
-                introQuestion: "請問這個提示是解題的什麼？",
-                wordExplanation: "事物中最緊要、起決定作用的部分。",
-                thinkChallenge: "你覺得要在一場籃球比賽中獲勝，什麼是最「關鍵」的因素？",
+                word: "渾濁", wordEnglish: "Hoarse", difficulty: 2, introVisual: "🗣️🌫️",
+                introContext: "爺爺生病了，說話的聲音聽起來很不清楚、很低沉。",
+                introQuestion: "形容聲音低沉不清，或者水不乾淨，可以怎麼說？",
+                wordExplanation: "形容聲音低沉粗重；也指水、空氣等含有雜質，不清潔。",
+                thinkChallenge: "感冒的時候，你的聲音也會變得「渾濁」嗎？",
                 chars: [
-                    { char: "關", radical: "門", wrongRadicals: ["糸", "木"], components: ["門", "𢇇"], hint: "在門上用絲線將木栓綁緊，引申為「關」卡。", twinGame: { correct: "關", wrong: "開", diff: "「關」裡面有很多線(𢇇)綁住，代表阻礙或關卡。" } },
-                    { char: "鍵", radical: "金", wrongRadicals: ["建", "廴"], components: ["金", "建"], hint: "金屬建造用來鎖門的插栓或鑰匙，引申為關「鍵」。", twinGame: { correct: "鍵", wrong: "健", diff: "鑰匙是金屬做的，所以是「金」字旁！" } }
+                    { char: "渾", radical: "水", wrongRadicals: ["軍", "車"], components: ["氵", "軍"], hint: "水(氵)像軍隊(軍)一樣多而雜亂，不乾淨。", twinGame: { correct: "渾", wrong: "揮", diff: "渾濁和水有關，左邊是三點水(氵)。" } },
+                    { char: "濁", radical: "水", wrongRadicals: ["蜀", "虫"], components: ["氵", "蜀"], hint: "水(氵)裡有很多蟲子(蜀)，代表水很汙濁。", twinGame: { correct: "濁", wrong: "觸", diff: "濁一樣和水有關，不是角字旁喔。" } }
                 ],
                 secret: {
-                    blocks: ["關", "鍵"],
-                    formula: { pattern: "是最重要的 [ 關鍵 ]", example: "例：努力是成功的關鍵。" },
-                    minefield: { wrong: "我用關鍵打開了家裡的大門。", reason: "點解錯：打開大門要用實體的「鑰匙」，「關鍵」是指抽象的重點。" }
+                    blocks: ["渾", "濁"],
+                    formula: { pattern: "[ 聲音 / 溪水 ] 十分 [ 渾濁 ]", example: "例：他生病後聲音聽起來十分渾濁。" },
+                    minefield: { wrong: "今天的天空十分渾濁。", reason: "點解錯：天空不乾淨通常說「灰暗」或「霧霾」，渾濁多形容水或聲音！" }
                 },
                 semanticGames: {
-                    synonym: { options: ["重點核心", "無關緊要", "隨便敷衍"], correct: "重點核心" },
-                    context: { options: [{text: "解開超級難題的最重要線索", emoji: "🔍💡"}, {text: "掉在路邊沒用的小石頭", emoji: "🪨🚶‍♂️"}, {text: "考卷上寫錯的名字", emoji: "📝❌"}], correctIndex: 0 }
+                    synonym: { options: ["混濁不清", "清澈見底", "響亮清脆"], correct: "混濁不清" },
+                    context: { options: [{text: "感冒後聲音變得很低沉不清楚", emoji: "🗣️🤒"}, {text: "鳥兒唱出非常好聽的高音", emoji: "🐦🎶"}, {text: "看見一條清澈的小溪", emoji: "🌊✨"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["溝通", "是", "解決衝突", "的", "關鍵"],
-                fillInGame: { sentence: "努力學習是獲得好成績的____。", options: ["建樹", "奠定", "關鍵"], correct: "關鍵" }
+                sentenceUnscramble: ["他的", "聲音", "聽起來", "十分", "渾濁"],
+                fillInGame: { sentence: "大雨過後，河裡的水變得十分____。", options: ["蒐集", "渾濁", "無垠"], correct: "渾濁" }
             },
             {
                 word: "蒐集", wordEnglish: "Collect", difficulty: 2, introVisual: "🗂️🔍",
@@ -780,11 +784,11 @@
                     synonym: { options: ["收集", "丟棄", "破壞"], correct: "收集" },
                     context: { options: [{text: "到處尋找特別的郵票貼起來", emoji: "🗂️✨"}, {text: "把不要的垃圾全部丟掉", emoji: "🗑️👋"}, {text: "把衣服隨便塞進衣櫃", emoji: "👕🌪️"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["老師", "請我們", "上網", "蒐集", "環保", "資料"],
+                sentenceUnscramble: ["老師", "請我們", "上網", "蒐集", "資料"],
                 fillInGame: { sentence: "警察正在現場____有用的線索。", options: ["實踐", "蒐集", "開拓"], correct: "蒐集" }
             },
             {
-                word: "開拓", wordEnglish: "Open up", difficulty: 2, introVisual: "🛤️⛏️",
+                word: "開拓", wordEnglish: "Expand", difficulty: 2, introVisual: "🛤️⛏️",
                 introContext: "他們在荒野中砍掉雜草、鋪上石頭，走出一條新路。",
                 introQuestion: "請問他們在做什麼？",
                 wordExplanation: "開闢、擴展新的領域或空間。",
@@ -803,7 +807,7 @@
                     context: { options: [{text: "在荒野中砍掉雜草走出一條新路", emoji: "🛤️⛏️"}, {text: "躲在房間裡不肯出門", emoji: "🚪🙅‍♂️"}, {text: "把已經蓋好的房子拆掉", emoji: "🏚️🔨"}], correctIndex: 0 }
                 },
                 sentenceUnscramble: ["這家", "公司", "正努力", "開拓", "海外", "市場"],
-                fillInGame: { sentence: "閱讀可以幫助我們____視野，了解世界。", options: ["開拓", "珍惜", "體會"], correct: "開拓" }
+                fillInGame: { sentence: "閱讀可以幫助我們____視野，了解世界。", options: ["開拓", "珍惜", "氣餒"], correct: "開拓" }
             },
             {
                 word: "奠定", wordEnglish: "Build", difficulty: 2, introVisual: "🧱🏗️",
@@ -825,35 +829,32 @@
                     context: { options: [{text: "蓋房子前先打好堅固的地基", emoji: "🧱🏗️"}, {text: "用沙子隨便堆一個會倒的城堡", emoji: "🏖️💨"}, {text: "把已經寫好的功課擦掉", emoji: "✏️🧹"}], correctIndex: 0 }
                 },
                 sentenceUnscramble: ["良好的", "教育", "為他", "奠定了", "成功", "基礎"],
-                fillInGame: { sentence: "小學階段的學習，為未來的發展____了基礎。", options: ["攀登", "蒐集", "奠定"], correct: "奠定" }
+                fillInGame: { sentence: "小學階段的學習，為未來的發展____了基礎。", options: ["攀登", "概莫能外", "奠定"], correct: "奠定" }
             },
             {
-                word: "體會", wordEnglish: "Understand", difficulty: 2, introVisual: "❤️💭",
-                introContext: "小明自己洗了一次衣服後，才終於知道媽媽平時有多累。",
-                introQuestion: "請問小明自己做過後，在心裡產生了什麼感覺？",
-                wordExplanation: "親自體驗並在心裡有所領悟。",
-                thinkChallenge: "你有沒有什麼事情是「親身體會」過後，才發現跟想像中不一樣的？",
+                word: "氣餒", wordEnglish: "Discouraged", difficulty: 2, introVisual: "😔📉",
+                introContext: "比賽輸了之後，小明覺得很灰心，不想再練習了。",
+                introQuestion: "形容失去勇氣和信心，叫什麼？",
+                wordExplanation: "失去勇氣和信心；灰心喪氣。",
+                thinkChallenge: "當你覺得「氣餒」的時候，有什麼方法可以讓自己重新振作起來？",
                 chars: [
-                    { char: "體", radical: "骨", wrongRadicals: ["豊", "肉"], components: ["骨", "豊"], hint: "人的骨骼和豐富的血肉組成身「體」。", twinGame: { correct: "體", wrong: "休", diff: "「體」是複雜的骨和豊組成喔。" } },
-                    { char: "會", radical: "曰", wrongRadicals: ["人", "日"], components: ["人", "曾"], hint: "大家(人)聚在一起商量說話，就是聚「會」、體「會」。", twinGame: { correct: "會", wrong: "曾", diff: "「會」上面有人字頭，代表人們聚在一起。" } }
+                    { char: "氣", radical: "气", wrongRadicals: ["米", "水"], components: ["气", "米"], hint: "像煮米飯時冒出的蒸汽，代表「氣」體或精神。", twinGame: { correct: "氣", wrong: "汽", diff: "生氣的氣裡面是米字喔。" } },
+                    { char: "餒", radical: "食", wrongRadicals: ["女", "妥"], components: ["飠", "妥"], hint: "沒東西吃(食)覺得餓，引申為失去精神、氣「餒」。", twinGame: { correct: "餒", wrong: "妥", diff: "氣餒像肚子餓一樣沒精神，左邊是食部(飠)。" } }
                 ],
                 secret: {
-                    blocks: ["體", "會"],
-                    formula: { pattern: "[ 深刻 / 用心 ] + [ 體會 ]", example: "例：深刻體會到父母的辛苦。" },
-                    minefield: { wrong: "我用嘴巴體會了一塊蛋糕。", reason: "點解錯：用嘴巴吃東西叫「品嚐」，「體會」是指用心去感受道理或心情。" }
+                    blocks: ["氣", "餒"],
+                    formula: { pattern: "遇到 失敗 也不 [ 氣餒 ]", example: "例：即使這次失敗了，我們也絕不氣餒。" },
+                    minefield: { wrong: "我考了一百分，感到很氣餒。", reason: "點解錯：考一百分應該很開心，「氣餒」是灰心難過的意思！" }
                 },
                 semanticGames: {
-                    synonym: { options: ["感受領悟", "麻木不仁", "視而不見"], correct: "感受領悟" },
-                    context: { options: [{text: "自己洗衣服後才懂媽媽有多累", emoji: "👕💦"}, {text: "只是看著別人做事什麼都不想", emoji: "👀😶"}, {text: "隨便敷衍了事不想努力", emoji: "🤷‍♂️💤"}], correctIndex: 0 }
+                    synonym: { options: ["灰心喪志", "意氣風發", "充滿自信"], correct: "灰心喪志" },
+                    context: { options: [{text: "比賽輸了覺得很灰心不想練了", emoji: "😔📉"}, {text: "贏得冠軍開心得跳起來", emoji: "🏆😆"}, {text: "很有自信地走上舞台", emoji: "🚶‍♂️✨"}], correctIndex: 0 }
                 },
-                sentenceUnscramble: ["只有", "親身經歷", "才能", "深刻", "體會", "父母的", "辛苦"],
-                fillInGame: { sentence: "讀了這篇文章，我深深____到了友情的珍貴。", options: ["遲鈍", "體會", "書籍"], correct: "體會" }
+                sentenceUnscramble: ["遇到", "困難", "時", "我們", "絕對", "不能", "氣餒"],
+                fillInGame: { sentence: "雖然這次考試成績不好，但他並沒有____。", options: ["氣餒", "渾濁", "建樹"], correct: "氣餒" }
             }
         ];
 
-        // ==========================================
-        // 系統初始化與變數
-        // ==========================================
         window.onload = function() {
             // 初始化進度追蹤
             window.wordDatabase.forEach((data, index) => {
@@ -920,6 +921,13 @@
                     list.appendChild(li);
                 }
             });
+        };
+
+        window.filterDifficulty = function(level, btnElem) {
+            window.playSound('pop'); window.currentFilter = level;
+            document.querySelectorAll('.diff-btn').forEach(b => b.className = "diff-btn px-6 py-2 rounded-lg text-slate-500 hover:bg-slate-200 border border-transparent transition-all whitespace-nowrap");
+            btnElem.className = "diff-btn px-6 py-2 rounded-lg text-indigo-900 bg-indigo-200 shadow-sm border border-indigo-300 transition-all whitespace-nowrap";
+            window.renderWordList(level);
         };
 
         window.selectWord = function(index, btnElem) {
@@ -1146,7 +1154,6 @@
             document.getElementById('minefield-reason').textContent = secret.minefield.reason;
         };
 
-        // Split TTS logic
         window.playBlockTTS = function(e) {
             const secret = window.currentWordData.secret;
             const text = `把字當積木拼：${secret.blocks.join('加')}等於${window.currentWordData.word}。`;
